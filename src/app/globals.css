@@ -27,12 +27,94 @@
   --font-sans: var(--font-inter);
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--velora-cream);
   color: var(--velora-dark);
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-::selection { background: var(--velora-orange); color: white; }
+
+::selection {
+  background: var(--velora-orange);
+  color: white;
+}
+
+/* ——— Motion (from Figma motion context) ——— */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-14px) rotate(-1.5deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-10px) rotate(1.2deg); }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.14; transform: scale(0.92); }
+  50% { opacity: 0.28; transform: scale(1.08); }
+}
+@keyframes soft-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.88); }
+}
+
+.animate-reveal {
+  animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-float {
+  animation: float-y 16s ease-in-out infinite;
+}
+.animate-glow {
+  animation: glow-pulse 16s ease-in-out infinite;
+}
+.animate-soft-float {
+  animation: soft-float 6s ease-in-out infinite;
+}
+.animate-status {
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+/* Stagger helpers */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Hover polish */
+.btn-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+.btn-lift:hover {
+  transform: translateY(-2px);
+}
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-reveal,
+  .animate-float,
+  .animate-glow,
+  .animate-soft-float,
+  .animate-status {
+    animation: none !important;
+  }
+}
