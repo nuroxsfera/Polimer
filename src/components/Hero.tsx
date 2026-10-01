@@ -3,6 +3,7 @@ import { A, Arrow, Marker } from "./shared";
 export function Hero() {
   return (
     <>
+      {/* HERO */}
       <section className="relative overflow-hidden bg-[#101412]">
         <div className="relative mx-auto max-w-[1440px]">
           <header className="flex h-24 items-center justify-between px-6 md:px-[72px]">
@@ -25,10 +26,12 @@ export function Hero() {
               <a href="#contact" className="flex h-12 items-center gap-3 rounded-full border border-white/30 px-5 text-[13px] text-[#faf9f5] md:h-14 md:px-6">Запросить расчёт <Arrow /></a>
             </div>
           </header>
+
           <div className="pointer-events-none absolute -right-20 top-20 hidden size-[790px] rounded-[40px] opacity-90 lg:block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={A.hero} alt="" className="size-full rounded-[40px] object-cover" />
           </div>
+
           <div className="flex gap-16 px-6 pb-10 pt-16 md:px-[72px] md:pt-[78px]">
             <div className="flex w-full max-w-[650px] flex-col gap-6 md:gap-[30px]">
               <Marker label="Промышленная покраска · EU" light />
@@ -54,6 +57,7 @@ export function Hero() {
               </div>
             </div>
           </div>
+
           <div className="grid grid-cols-2 border-t border-white/9 px-6 py-7 md:grid-cols-4 md:px-[72px]">
             {[["12 м", "максимальная длина детали"], ["25 лет", "расчётный срок защиты"], ["240+", "цветов и спецэффектов"], ["98,7%", "заказов точно в срок"]].map(([v, l]) => (
               <div key={v} className="border-l border-white/9 pl-4 first:border-l-0 first:pl-0 md:pl-6 md:first:border-l md:first:pl-6">
@@ -64,6 +68,8 @@ export function Hero() {
           </div>
         </div>
       </section>
+
+
     </>
   );
 }
