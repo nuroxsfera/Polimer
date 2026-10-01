@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
+
 export const A = {
   hero: "https://www.figma.com/api/mcp/asset/30f90409-7122-4bf3-bc68-471b822fdc52.png",
   eu: "https://www.figma.com/api/mcp/asset/a4793e55-7080-44e6-9523-5c0072d1ff7a/f36f4.png",
@@ -34,3 +38,96 @@ export function Marker({ label, light }: { label: string; light?: boolean }) {
     </div>
   );
 }
+
+export function CountUp({
+  end,
+  suffix = "",
+  decimals = 0,
+  duration = 1600,
+  className = "",
+}: {
+  end: number;
+  suffix?: string;
+  decimals?: number;
+  duration?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting && !started) setStarted(true);
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const t0 = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(end * eased);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [started, end, duration]);
+
+  const display =
+    decimals > 0
+      ? val.toFixed(decimals).replace(".", ",")
+      : Math.round(val).toLocaleString("ru-RU");
+
+  return (
+    <span ref={ref} className={className}>
+      {display}
+      {suffix}
+    </span>
+  );
+}
+
+export function Reveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) setOn(true);
+    }, { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${on ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export const PHONE = "+7 996 544 99 49";
+export const PHONE_TEL = "+79965449949";
+export const ADDRESS = "г. Новосибирск, Переездная 1";
+export const EMAIL = "hello@velora-coating.ru";
