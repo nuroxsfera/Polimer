@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, type ReactNode } from "react";
+
 export const A = {
   hero: "https://www.figma.com/api/mcp/asset/aada5297-f9f0-4c8f-b590-75e10ddc44f4/42244.png",
   eu: "https://www.figma.com/api/mcp/asset/a4793e55-7080-44e6-9523-5c0072d1ff7a/f36f4.png",
