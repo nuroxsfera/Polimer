@@ -9,14 +9,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Velora Coating — Порошковая окраска EU",
+  title: "Velora Coating — Порошковая окраска · Новосибирск",
   description:
-    "Полимерно-порошковая окраска деталей до 12 метров. Стабильный цвет, безупречная поверхность и защита до 25 лет.",
+    "Полимерно-порошковая окраска деталей до 12 метров. Производство в Новосибирске. Стабильный цвет, безупречная поверхность и защита до 25 лет.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="ru" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full font-sans">{children}</body>

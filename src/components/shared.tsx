@@ -39,6 +39,7 @@ export function Marker({ label, light }: { label: string; light?: boolean }) {
   );
 }
 
+/** Count-up number when element enters viewport */
 export function CountUp({
   end,
   suffix = "",
@@ -96,6 +97,7 @@ export function CountUp({
   );
 }
 
+/** Fade/slide in when visible */
 export function Reveal({
   children,
   className = "",
