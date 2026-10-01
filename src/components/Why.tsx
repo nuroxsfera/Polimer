@@ -1,11 +1,15 @@
 "use client";
 
-import { Marker, Reveal } from "./shared";
+import { A, Marker, Reveal } from "./shared";
 
 const icons = [
+  // shield
   <svg key="s" className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7l8-4z" strokeLinecap="round" strokeLinejoin="round" /></svg>,
+  // target
   <svg key="t" className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2" strokeLinecap="round" /></svg>,
+  // leaf
   <svg key="l" className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 19c8-1 12-7 14-14-7 2-13 6-14 14z" strokeLinecap="round" strokeLinejoin="round" /><path d="M5 19c2-4 6-7 11-9" strokeLinecap="round" /></svg>,
+  // layers
   <svg key="g" className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5" strokeLinecap="round" strokeLinejoin="round" /></svg>,
 ];
 
@@ -25,7 +29,7 @@ export function Why() {
             <Marker label="Инженерная красота" />
             <h2 className="text-[clamp(32px,4vw,52px)] leading-[1.06] text-[#101412]">Видимый результат. Невидимая дисциплина.</h2>
             <p className="text-[16px] leading-[1.55] text-[#69736d]">
-              Мы управляем всем циклом внутри производства: подготовкой, окраской, полимеризацией и лабораторным контролем. Поэтому отвечаем не за этап, а за готовую поверхность.
+              Мы управляем всем циклом внутри производства: подготовкой, полимеризацией и контролем качества. Поэтому отвечаем не за этап, а за готовую поверхность.
             </p>
           </div>
           <div className="mt-10 flex items-center gap-3.5">

@@ -15,7 +15,7 @@ export function Reviews() {
               <span className="text-[10px] uppercase text-[#ffe3dc]">Партнёрство · 5 лет</span>
             </div>
             <p className="mb-8 text-[clamp(24px,3.5vw,48px)] leading-[1.1] text-white">
-              «Velora говорит с архитектором о цвете, а с инженером — о допусках. В результате мы получаем именно тот объект, который согласовали, и именно в тот день.»
+              «ПолимерКолор держит сроки и цвет: длинномер ушёл целиком, без разборки. Покрытие ровное, паспорт партии на руках в день отгрузки.»
             </p>
             <div className="flex items-center gap-3.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,20 +31,18 @@ export function Reviews() {
             <img src={A.reviewPrj} alt="" className="absolute inset-0 size-full object-cover" />
             <div className="relative z-10 mt-auto rounded-[18px] bg-[rgba(16,20,18,0.78)] p-4 backdrop-blur-sm">
               <p className="text-[12px] text-white">ЖК «Сибирский» · фасад 3 200 м²</p>
-              <p className="text-[10px] text-[#bcc5bf]">Velora Coral · Super Durable</p>
+              <p className="text-[10px] text-[#bcc5bf]">RAL · Super Durable</p>
             </div>
           </Reveal>
         </div>
       </div>
 
-      {/* Heading outside marquee */}
       <div className="border-t border-white/25 px-6 pt-8 md:px-[72px]">
         <p className="text-[13px] font-medium uppercase tracking-wide text-white md:text-[15px]">
           Нам доверяют промышленные и архитектурные команды
         </p>
       </div>
 
-      {/* Marquee strip */}
       <div className="overflow-hidden py-8">
         <div className="flex w-max animate-marquee gap-12 whitespace-nowrap px-6">
           {[...BRANDS, ...BRANDS].map((b, i) => (
