@@ -1,41 +1,86 @@
-import { A, Marker } from "./shared";
+"use client";
+
+import { useState } from "react";
+import { A, Marker, Reveal } from "./shared";
+
+const STEPS = [
+  { n: "01", t: "Аудит", d: "Материал, геометрия, среда эксплуатации.", img: A.factory, status: "Линия 01 · приёмка · входной контроль" },
+  { n: "02", t: "Подготовка", d: "Дробеструй, фосфатирование или пассивация.", img: A.tech, status: "Пост подготовки · дробеструй" },
+  { n: "03", t: "Сушка", d: "Полное удаление влаги из полостей и швов.", img: A.lab, status: "Сушильная камера · 80 °C" },
+  { n: "04", t: "Нанесение", d: "Автомат + ручная проработка сложных зон.", img: A.factory, status: "Линия 02 · партия VLR–2684 · нанесение" },
+  { n: "05", t: "Полимеризация", d: "Термопрофиль фиксируется для каждой загрузки.", img: A.capacity, status: "Линия 02 · партия VLR–2684 · полимеризация" },
+  { n: "06", t: "Контроль", d: "Толщина, цвет, адгезия и упаковка.", img: A.lab, status: "QC Lab · финальный паспорт" },
+];
 
 export function Process() {
-  const steps = [
-    { n: "01", t: "Аудит", d: "Материал, геометрия, среда эксплуатации." },
-    { n: "02", t: "Подготовка", d: "Дробеструй, фосфатирование или пассивация." },
-    { n: "03", t: "Сушка", d: "Полное удаление влаги из полостей и швов." },
-    { n: "04", t: "Нанесение", d: "Автомат + ручная проработка сложных зон.", a: true },
-    { n: "05", t: "Полимеризация", d: "Термопрофиль фиксируется для каждой загрузки." },
-    { n: "06", t: "Контроль", d: "Толщина, цвет, адгезия и упаковка." },
-  ];
+  const [active, setActive] = useState(3);
+  const current = STEPS[active];
+
   return (
     <section className="bg-[#f4f2ec] px-6 py-20 md:px-[72px] md:py-28">
       <div className="mx-auto max-w-[1296px]">
-        <div className="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <Reveal className="mb-12 flex flex-col gap-8 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[700px]">
             <Marker label="От металла до отгрузки" />
             <h2 className="mt-5 text-[clamp(32px,4vw,52px)] leading-[1.06] text-[#101412]">Шесть контролируемых состояний одной детали</h2>
           </div>
-          <p className="max-w-[390px] text-[16px] leading-[1.55] text-[#69736d]">Один технолог ведёт заказ через все посты. Параметры фиксируются в цифровом маршруте.</p>
-        </div>
+          <p className="max-w-[390px] text-[16px] leading-[1.55] text-[#69736d]">
+            Один технолог ведёт заказ через все посты. Параметры фиксируются в цифровом маршруте, а вы видите статус партии без звонков и ожидания.
+          </p>
+        </Reveal>
         <div className="mb-10 grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-6">
-          {steps.map((s) => (
-            <div key={s.n} className={`flex h-[200px] flex-col justify-between rounded-[28px] border p-5 ${s.a ? "border-[#ff5a36] bg-[#ff5a36]" : "border-[#ced4cf] bg-white"}`}>
-              <span className={`text-[10px] ${s.a ? "text-[#ffe3dc]" : "text-[#69736d]"}`}>{s.n}</span>
-              <div>
-                <p className={`mb-2 text-[19px] ${s.a ? "text-white" : "text-[#101412]"}`}>{s.t}</p>
-                <p className={`text-[11px] ${s.a ? "text-[#ffe1d9]" : "text-[#69736d]"}`}>{s.d}</p>
-              </div>
-            </div>
-          ))}
+          {STEPS.map((s, i) => {
+            const isActive = i === active;
+            return (
+              <button
+                key={s.n}
+                type="button"
+                onClick={() => setActive(i)}
+                className={`flex h-[210px] flex-col justify-between rounded-[28px] border p-5 text-left transition-all duration-300 md:h-[240px] ${
+                  isActive
+                    ? "scale-[1.04] border-[#ff5a36] bg-[#ff5a36] shadow-[0_16px_40px_-12px_rgba(255,90,54,0.45)]"
+                    : "border-[#ced4cf] bg-white hover:border-[#ff5a36]/50 hover:scale-[1.02]"
+                }`}
+              >
+                <div
+                  className={`flex size-14 items-center justify-center rounded-full text-[15px] font-bold ${
+                    isActive
+                      ? "bg-white text-[#ff5a36] shadow-md"
+                      : "bg-[#101412] text-[#faf9f5] ring-2 ring-[#101412]/20"
+                  }`}
+                >
+                  {s.n}
+                </div>
+                <div>
+                  <p className={`mb-2 text-[19px] ${isActive ? "text-white" : "text-[#101412]"}`}>{s.t}</p>
+                  <p className={`text-[11px] leading-[1.45] ${isActive ? "text-[#ffe1d9]" : "text-[#69736d]"}`}>{s.d}</p>
+                </div>
+              </button>
+            );
+          })}
         </div>
-        <div className="relative flex h-[300px] items-end overflow-hidden rounded-[40px] p-6 md:h-[360px]">
+        <div className="relative flex h-[300px] items-end justify-between overflow-hidden rounded-[40px] p-6 md:h-[360px] md:p-7">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={A.factory} alt="" className="absolute inset-0 size-full object-cover" />
+          <img
+            key={current.img}
+            src={current.img}
+            alt=""
+            className="absolute inset-0 size-full object-cover transition-opacity duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
           <div className="relative z-10 flex items-center gap-2.5 rounded-full bg-[rgba(16,20,18,0.85)] px-4 py-3">
             <span className="size-2 animate-pulse rounded-full bg-[#d7ff55]" />
-            <span className="text-[11px] text-[#faf9f5]">Линия 02 · партия VLR–2684 · полимеризация</span>
+            <span className="text-[11px] text-[#faf9f5]">{current.status}</span>
+          </div>
+          <div className="relative z-10 hidden w-[300px] rounded-[28px] bg-white/91 p-5 backdrop-blur-sm md:block">
+            <div className="mb-3 flex justify-between text-[10px]">
+              <span className="text-[#101412]">Этап {current.n}</span>
+              <span className="text-[#69736d]">{current.t}</span>
+            </div>
+            <div className="mb-3 flex items-end justify-between">
+              <span className="text-[28px] text-[#101412]">{current.t}</span>
+            </div>
+            <p className="text-[12px] leading-[1.4] text-[#69736d]">{current.d}</p>
           </div>
         </div>
       </div>
