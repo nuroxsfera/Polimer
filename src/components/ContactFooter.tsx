@@ -15,7 +15,7 @@ export function ContactFooter() {
     if (!name.trim() || !email.trim()) return;
     setSending(true);
     const body = encodeURIComponent(
-      `Имя и компания: ${name}\nEmail: ${email}\nПроект: ${project || "—"}\n\nОтправлено с сайта Velora Coating.`
+      `Имя и компания: ${name}\nEmail: ${email}\nПроект: ${project || "—"}\n\nОтправлено с сайта ПолимерКолор.`
     );
     const subject = encodeURIComponent(`Заявка на расчёт: ${name}`);
     window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
@@ -150,10 +150,10 @@ export function ContactFooter() {
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <span className="text-[22px] text-[#faf9f5]">VELORA</span>
+              <span className="text-[22px] text-[#faf9f5]">ПолимерКолор</span>
             </div>
             <p className="max-w-[340px] text-[11px] leading-[1.5] text-[#849089]">
-              Полимерно-порошковые покрытия для архитектуры, промышленности и предметного дизайна. Производство в Новосибирске.
+              Полимерно-порошковое окрашивание металла в Новосибирске. Длинномер и крупногабарит — целиком, без разборки и порезки.
             </p>
           </div>
           {[
@@ -176,7 +176,7 @@ export function ContactFooter() {
           ))}
         </div>
         <div className="flex flex-wrap items-center justify-between gap-4 text-[9px] text-[#69736d]">
-          <span>© 2026 Velora Coating · {ADDRESS}</span>
+          <span>© 2026 ПолимерКолор · {ADDRESS}</span>
           <div className="flex gap-6">
             <a href="#">Конфиденциальность</a>
             <a href="#">Cookies</a>
