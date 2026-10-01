@@ -1,3 +1,5 @@
+"use client";
+
 import { A, Arrow, Marker } from "./shared";
 
 export function ContactFooter() {
