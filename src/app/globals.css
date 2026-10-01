@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+:root {
+  --velora-dark: #101412;
+  --velora-cream: #faf9f5;
+  --velora-warm: #f4f2ec;
+  --velora-orange: #ff5a36;
+  --velora-mint: #bfe7d2;
+  --velora-lime: #d7ff55;
+  --velora-blue: #355cff;
+  --velora-muted: #69736d;
+  --velora-muted-light: #aeb7b1;
+  --velora-border: #ced4cf;
+}
+
+@theme inline {
+  --color-velora-dark: var(--velora-dark);
+  --color-velora-cream: var(--velora-cream);
+  --color-velora-warm: var(--velora-warm);
+  --color-velora-orange: var(--velora-orange);
+  --color-velora-mint: var(--velora-mint);
+  --color-velora-lime: var(--velora-lime);
+  --color-velora-blue: var(--velora-blue);
+  --color-velora-muted: var(--velora-muted);
+  --color-velora-muted-light: var(--velora-muted-light);
+  --color-velora-border: var(--velora-border);
+  --font-sans: var(--font-inter);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--velora-cream);
+  color: var(--velora-dark);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--velora-orange); color: white; }
