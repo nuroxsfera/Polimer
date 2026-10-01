@@ -22,4 +22,4 @@ export const A = {
 export const PHONE = "+7 996 544 99 49";
 export const PHONE_TEL = "+79965449949";
 export const ADDRESS = "г. Новосибирск, Переездная 1";
-export const EMAIL = "hello@velora-coating.ru";
+export const EMAIL = "info@polimercolor.ru";
