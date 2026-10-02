@@ -1,12 +1,6 @@
-/** Pure asset map + contacts — no "use client", safe for Server Components.
- *
- *  Локальные файлы уже подготовлены (public/images/*.jpg).
- *  Пока они не закоммичены в GitHub, используем Figma CDN.
- *  После загрузки картинок в public/images переключите пути на /images/*.jpg
- */
+/** Contacts + images. Figma CDN until public/images committed to GitHub. */
 
 export const A = {
-  // TODO: заменить на "/images/hero.jpg" после пуша public/images в репозиторий
   hero: "https://www.figma.com/api/mcp/asset/30f90409-7122-4bf3-bc68-471b822fdc52.png",
   tech: "https://www.figma.com/api/mcp/asset/0cef556b-71a9-4b50-a45e-2171f5c1071a/329ff.png",
   factory: "https://www.figma.com/api/mcp/asset/35af915e-b692-42ab-8510-feb8ffed16dd/be0a6.png",
