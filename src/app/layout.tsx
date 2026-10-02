@@ -8,6 +8,13 @@ const inter = Inter({
   display: "swap",
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#101412",
+};
+
 export const metadata: Metadata = {
   title: "ПолимерКолор — Порошковая окраска металла · Новосибирск",
   description:
