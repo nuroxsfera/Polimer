@@ -14,10 +14,15 @@ export function ContactFooter() {
     e.preventDefault();
     if (!name.trim() || !email.trim()) return;
     setSending(true);
-    const body = encodeURIComponent(
-      `Имя и компания: ${name}\nEmail: ${email}\nПроект: ${project || "—"}\n\nОтправлено с сайта ПолимерКолор.`
-    );
+    const plain = `Имя и компания: ${name}\nEmail: ${email}\nПроект: ${project || "—"}\n\nОтправлено с сайта ПолимерКолор.`;
+    const body = encodeURIComponent(plain);
     const subject = encodeURIComponent(`Заявка на расчёт: ${name}`);
+    // mailto + clipboard fallback (works without backend)
+    try {
+      void navigator.clipboard?.writeText(plain);
+    } catch {
+      /* ignore */
+    }
     window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
     setTimeout(() => {
       setSending(false);
@@ -57,9 +62,14 @@ export function ContactFooter() {
             <div className="flex size-14 items-center justify-center rounded-full bg-[#d7ff55] text-2xl text-[#101412]">✓</div>
             <p className="text-[26px] text-[#faf9f5]">Заявка подготовлена</p>
             <p className="max-w-[360px] text-[14px] leading-[1.5] text-[#aeb7b1]">
-              Откроется почтовый клиент с заполненным письмом. Или напишите нам напрямую: {EMAIL}
+              Откроется почтовый клиент с заполненным письмом. Текст заявки также скопирован в буфер обмена.
+              Можно написать напрямую: {EMAIL} или позвонить {PHONE}.
             </p>
-            <button type="button" onClick={() => setSent(false)} className="mt-2 text-[13px] text-[#ff5a36] underline">
+            <button
+              type="button"
+              onClick={() => setSent(false)}
+              className="mt-2 text-[13px] text-[#ff5a36] underline"
+            >
               Отправить ещё одну
             </button>
           </div>
