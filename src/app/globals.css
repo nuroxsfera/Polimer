@@ -27,13 +27,9 @@
   --font-sans: var(--font-inter);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--velora-cream);
@@ -47,83 +43,91 @@ body {
   color: white;
 }
 
-/* ——— Motion (from Figma motion context) ——— */
-@keyframes reveal-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
-@keyframes float-y {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-14px) rotate(-1.5deg); }
-  50% { transform: translateY(0) rotate(0deg); }
-  75% { transform: translateY(-10px) rotate(1.2deg); }
+.reveal-on {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.14; transform: scale(0.92); }
-  50% { opacity: 0.28; transform: scale(1.08); }
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translate3d(0, 20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
+.hero-in {
+  animation: hero-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-in-d1 { animation-delay: 0.08s; }
+.hero-in-d2 { animation-delay: 0.16s; }
+.hero-in-d3 { animation-delay: 0.24s; }
+.hero-in-d4 { animation-delay: 0.32s; }
+.hero-in-d5 { animation-delay: 0.4s; }
+
 @keyframes soft-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-@keyframes status-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.55; transform: scale(0.88); }
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@keyframes ring-draw {
-  from { stroke-dashoffset: 280; }
-  to { stroke-dashoffset: 0; }
-}
-
-.animate-reveal {
-  animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.animate-float {
-  animation: float-y 16s ease-in-out infinite;
-}
-.animate-glow {
-  animation: glow-pulse 16s ease-in-out infinite;
+  50% { transform: translateY(-8px); }
 }
 .animate-soft-float {
-  animation: soft-float 6s ease-in-out infinite;
+  animation: soft-float 5s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
 }
 .animate-status {
-  animation: status-pulse 2.4s ease-in-out infinite;
-}
-.animate-marquee {
-  animation: marquee 28s linear infinite;
+  animation: status-pulse 2.2s ease-in-out infinite;
 }
 
-/* Stagger helpers */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-700 { animation-delay: 700ms; }
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.22; }
+}
+.animate-glow-breathe {
+  animation: glow-breathe 8s ease-in-out infinite;
+}
 
-/* Hover polish */
 .btn-lift {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
 }
 .btn-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px -8px rgba(255, 90, 54, 0.45);
 }
-.card-lift {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+.btn-lift:active {
+  transform: translateY(0);
 }
 
-/* Mobile polish */
+.img-fade {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.img-fade.loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-on {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-in,
+  .animate-soft-float,
+  .animate-status,
+  .animate-glow-breathe {
+    animation: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
 @media (max-width: 640px) {
-  html {
-    -webkit-text-size-adjust: 100%;
-  }
-  button, a {
-    -webkit-tap-highlight-color: transparent;
-  }
+  html { -webkit-text-size-adjust: 100%; }
+  button, a { -webkit-tap-highlight-color: transparent; }
 }
