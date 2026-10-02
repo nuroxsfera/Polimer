@@ -1,33 +1,21 @@
 import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
-import { Why } from "@/components/Why";
-import { Technology } from "@/components/Technology";
-import { Process } from "@/components/Process";
-import { Applications } from "@/components/Applications";
-import { Palette } from "@/components/Palette";
-import { Projects } from "@/components/Projects";
-import { Quality } from "@/components/Quality";
-import { Capacity } from "@/components/Capacity";
-import { Reviews } from "@/components/Reviews";
-import { Faq } from "@/components/Faq";
-import { ContactFooter } from "@/components/ContactFooter";
+import { HeroDecision } from "@/components/short/HeroDecision";
+import { Chamber } from "@/components/short/Chamber";
+import { LocationQuote } from "@/components/short/LocationQuote";
+import { StickyCta } from "@/components/short/StickyCta";
 
+/**
+ * Короткая главная (v2) — mobile-first, ~3 экрана.
+ * Длинный лендинг: см. page-long.tsx.archive и ROLLBACK.md
+ */
 export default function Home() {
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-x-hidden pb-20 md:pb-0">
       <Navbar />
-      <Hero />
-      <Why />
-      <Technology />
-      <Process />
-      <Applications />
-      <Palette />
-      <Projects />
-      <Quality />
-      <Capacity />
-      <Reviews />
-      <Faq />
-      <ContactFooter />
+      <HeroDecision />
+      <Chamber />
+      <LocationQuote />
+      <StickyCta />
     </main>
   );
 }
