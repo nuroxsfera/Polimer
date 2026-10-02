@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 export { A, PHONE, PHONE_TEL, ADDRESS, EMAIL } from "./assets";
 
@@ -15,18 +15,60 @@ export function Arrow({ className = "size-4" }: { className?: string }) {
 export function Marker({ label, light }: { label: string; light?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <span className="size-[7px] animate-pulse rounded-full bg-[#ff5a36]" />
+      <span className="size-[7px] animate-status rounded-full bg-[#ff5a36]" />
       <span className={`text-[11px] uppercase tracking-wide ${light ? "text-[#faf9f5]" : "text-[#101412]"}`}>{label}</span>
     </div>
   );
 }
 
-/** Count-up number when element enters viewport */
+/** Scroll-in reveal — once, GPU-friendly */
+export function Reveal({
+  children,
+  className = "",
+  delay = 0,
+  as: Tag = "div",
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  as?: "div" | "section" | "li" | "article";
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const [on, setOn] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setOn(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <Tag
+      ref={ref as never}
+      className={`reveal ${on ? "reveal-on" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}ms` } as CSSProperties}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+/** Count-up when in view */
 export function CountUp({
   end,
   suffix = "",
   decimals = 0,
-  duration = 1600,
+  duration = 1400,
   className = "",
 }: {
   end: number;
@@ -44,13 +86,13 @@ export function CountUp({
     if (!el) return;
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting && !started) setStarted(true);
+        if (e.isIntersecting) setStarted(true);
       },
-      { threshold: 0.4 }
+      { threshold: 0.35 }
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [started]);
+  }, []);
 
   useEffect(() => {
     if (!started) return;
@@ -76,42 +118,5 @@ export function CountUp({
       {display}
       {suffix}
     </span>
-  );
-}
-
-/** Fade/slide in when visible */
-export function Reveal({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [on, setOn] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setOn(true);
-      },
-      { threshold: 0.12 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        on ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-      } ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
   );
 }
