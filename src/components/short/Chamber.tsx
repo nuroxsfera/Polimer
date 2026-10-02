@@ -4,101 +4,148 @@ import { useState } from "react";
 import { A, Arrow } from "../shared";
 
 const SPECS = [
-  { k: "Длина рабочей зоны", v: "8–12 м (типовая камера ~10 м)" },
-  { k: "Ширина", v: "3 м" },
-  { k: "Высота", v: "3 м" },
-  { k: "Грузоподъёмность", v: "до 1,5 т" },
-  { k: "Формат", v: "Длинномер и крупногабарит целиком" },
-  { k: "Срок", v: "от 2 дней" },
+  { k: "Длина", v: "8–12 м", sub: "типовая ~10 м" },
+  { k: "Ширина", v: "3 м", sub: "рабочая" },
+  { k: "Высота", v: "3 м", sub: "рабочая" },
+  { k: "Нагрузка", v: "1,5 т", sub: "макс." },
 ];
 
 const ITEMS = [
-  "Фермы и балки",
-  "Ворота и калитки",
-  "Каркасы и рамы",
-  "Ограждения",
-  "Корпуса оборудования",
-  "Листовые и сварные узлы",
+  { t: "Фермы и балки", img: A.arch },
+  { t: "Ворота, калитки", img: A.urban },
+  { t: "Каркасы", img: A.equipment },
+  { t: "Ограждения", img: A.transport },
 ];
 
-/** Экран 2: камера + что красим */
 export function Chamber() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section id="kamera" className="bg-[#faf9f5] px-4 py-12 sm:px-6 sm:py-16 md:px-[72px]">
-      <div className="mx-auto max-w-[960px]">
-        <p className="text-[11px] uppercase tracking-wide text-[#69736d]">Полимерная камера ППО</p>
-        <h2 className="mt-2 text-[clamp(24px,5vw,36px)] leading-[1.15] text-[#101412]">
-          Влезет ли ваша деталь
-        </h2>
-        <p className="mt-3 max-w-[520px] text-[15px] leading-[1.5] text-[#69736d]">
-          Окрашиваем длинномерные и крупногабаритные металлоизделия целиком — без разборки и порезки.
-          Качественная полимеризация, прочное покрытие.
-        </p>
+    <section id="kamera" className="bg-[#f4f2ec] px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
+      <div className="mx-auto max-w-[1100px]">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">
+              Полимерная камера ППО
+            </p>
+            <h2 className="mt-2 text-[clamp(26px,4.5vw,40px)] font-semibold leading-[1.1] tracking-tight text-[#101412]">
+              Влезет ли ваша деталь
+            </h2>
+          </div>
+          <p className="max-w-[340px] text-[14px] leading-[1.5] text-[#69736d]">
+            Крупногабарит и длинномер целиком — без разборки. Полимеризация, прочное покрытие, срок от 2 дней.
+          </p>
+        </div>
 
-        <div className="mt-8 grid gap-4 lg:grid-cols-2">
-          <div className="relative min-h-[200px] overflow-hidden rounded-[24px] bg-[#101412] sm:min-h-[260px]">
+        <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {SPECS.map((s) => (
+            <div
+              key={s.k}
+              className="rounded-2xl border border-[#e0ddd6] bg-white p-4 shadow-[0_8px_30px_-16px_rgba(16,20,18,0.12)] sm:p-5"
+            >
+              <p className="text-[12px] uppercase tracking-wide text-[#8a948e]">{s.k}</p>
+              <p className="mt-1 text-[28px] font-semibold tracking-tight text-[#101412]">{s.v}</p>
+              <p className="mt-1 text-[12px] text-[#a0a9a3]">{s.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="relative min-h-[220px] overflow-hidden rounded-[24px] sm:min-h-[300px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={A.capacity}
-              alt="Полимерная камера"
-              className="absolute inset-0 size-full object-cover opacity-90"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-            <p className="absolute bottom-4 left-4 text-[12px] text-white/90">Камера ППО · схема/фото — позже</p>
+            <img src={A.factory} alt="" className="absolute inset-0 size-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#101412]/70 to-transparent" />
+            <div className="absolute bottom-5 left-5 right-5">
+              <p className="text-[13px] text-white/80">Производство · Новосибирск</p>
+              <p className="mt-1 max-w-[280px] text-[18px] font-medium leading-snug text-white">
+                Одна камера — от мелкого узла до фермы 12&nbsp;м
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-col justify-between rounded-[24px] border border-[#ced4cf] bg-white p-5 sm:p-6">
-            <ul className="space-y-3">
-              {SPECS.slice(0, 4).map((s) => (
-                <li key={s.k} className="flex justify-between gap-4 border-b border-[#eee] pb-2 text-[14px]">
-                  <span className="text-[#69736d]">{s.k}</span>
-                  <span className="text-right font-medium text-[#101412]">{s.v}</span>
+          <div className="flex flex-col justify-between rounded-[24px] border border-[#e0ddd6] bg-white p-6">
+            <div>
+              <p className="text-[13px] font-medium text-[#101412]">Что важно инженеру</p>
+              <ul className="mt-4 space-y-3 text-[14px] leading-[1.45] text-[#69736d]">
+                <li className="flex gap-2">
+                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#ff5a36]" />
+                  Габарит и вес — сразу в заявке, проверим влезание
                 </li>
-              ))}
-            </ul>
+                <li className="flex gap-2">
+                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#ff5a36]" />
+                  Цвет RAL / образец — согласуем до запуска партии
+                </li>
+                <li className="flex gap-2">
+                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#ff5a36]" />
+                  Срок от 2 дней при свободном слоте камеры
+                </li>
+              </ul>
+            </div>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="mt-4 flex h-11 items-center justify-center gap-2 rounded-full border border-[#101412]/20 text-[13px] text-[#101412]"
+              className="mt-6 flex h-11 items-center justify-center gap-2 rounded-full border border-[#101412]/15 text-[13px] font-medium text-[#101412] transition hover:bg-[#f4f2ec]"
             >
-              {open ? "Скрыть подробности" : "Все характеристики"} <Arrow className="size-3.5" />
+              {open ? "Свернуть" : "Полные характеристики"} <Arrow className="size-3.5" />
             </button>
           </div>
         </div>
 
         {open && (
-          <div className="mt-4 rounded-[20px] border border-[#ced4cf] bg-white p-5 text-[14px] leading-[1.55] text-[#69736d]">
-            <p className="mb-3 text-[#101412]">
-              Рабочая длина в цикле — ориентир <strong>8–12 м</strong>, фактическая камера около{" "}
-              <strong>10 × 3 × 3 м</strong>, нагрузка до <strong>1,5 т</strong>.
-            </p>
-            <ul className="list-inside list-disc space-y-1">
-              {SPECS.map((s) => (
-                <li key={s.k}>
-                  <span className="text-[#101412]">{s.k}:</span> {s.v}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-3">
-              Рендер камеры и чертёж добавим отдельно — пока каркас под контент.
+          <div className="mt-4 rounded-2xl border border-[#e0ddd6] bg-white p-5 text-[14px] leading-[1.55] text-[#69736d] sm:p-6">
+            <p>
+              Рабочая длина <strong className="text-[#101412]">8–12 м</strong> (камера ориентировочно{" "}
+              <strong className="text-[#101412]">10 × 3 × 3 м</strong>), грузоподъёмность до{" "}
+              <strong className="text-[#101412]">1,5 т</strong>. Окраска длинномера и крупногабарита
+              целиком, без разборки и порезки.
             </p>
           </div>
         )}
 
-        <div className="mt-10">
-          <p className="text-[11px] uppercase tracking-wide text-[#69736d]">Что окрашиваем</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {ITEMS.map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-[#ced4cf] bg-white px-3.5 py-2 text-[13px] text-[#101412]"
+        <div className="mt-14">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8a948e]">Типовые изделия</p>
+              <h3 className="mt-1 text-[22px] font-semibold text-[#101412] sm:text-[26px]">Что отдаёте в камеру</h3>
+            </div>
+            <a href="#contact" className="hidden text-[13px] font-medium text-[#ff5a36] sm:inline">
+              Спросить по вашему типу →
+            </a>
+          </div>
+          <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
+            {ITEMS.map((item) => (
+              <div
+                key={item.t}
+                className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#101412]"
               >
-                {t}
-              </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.img}
+                  alt=""
+                  className="size-full object-cover transition duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                <p className="absolute bottom-3 left-3 right-3 text-[13px] font-medium text-white sm:text-[14px]">
+                  {item.t}
+                </p>
+              </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-4 rounded-2xl border border-[#e0ddd6] bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <div>
+            <p className="text-[15px] font-medium text-[#101412]">Как считается цена</p>
+            <p className="mt-1 max-w-[480px] text-[13px] leading-[1.5] text-[#69736d]">
+              Площадь, сложность подготовки, цвет и объём партии. Ориентир по рынку Новосибирска — в просчёте за рабочий день.
+            </p>
+          </div>
+          <a
+            href="#contact"
+            className="btn-lift flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[#101412] px-6 text-[13px] text-white"
+          >
+            Запросить сумму <Arrow className="size-3.5" />
+          </a>
         </div>
       </div>
     </section>
