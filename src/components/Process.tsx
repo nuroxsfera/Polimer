@@ -35,8 +35,8 @@ const STEPS = [
   },
   {
     n: "05",
-    t: "Полимеризация",
-    d: "Запекание в печи ППО: порошок спекается в прочную плёнку.",
+    t: "Запекание",
+    d: "Полимеризация в печи ППО: порошок спекается в прочную плёнку.",
     img: A.capacity,
     status: "Печь ППО · полимеризация",
   },
@@ -75,14 +75,14 @@ export function Process() {
                 key={s.n}
                 type="button"
                 onClick={() => setActive(i)}
-                className={`flex h-[210px] flex-col justify-between rounded-[28px] border p-5 text-left transition-all duration-300 md:h-[240px] ${
+                className={`flex min-h-[210px] flex-col justify-between overflow-hidden rounded-[28px] border p-4 text-left transition-all duration-300 md:min-h-[240px] md:p-5 ${
                   isActive
                     ? "scale-[1.04] border-[#ff5a36] bg-[#ff5a36] shadow-[0_16px_40px_-12px_rgba(255,90,54,0.45)]"
                     : "border-[#ced4cf] bg-white hover:border-[#ff5a36]/50 hover:scale-[1.02]"
                 }`}
               >
                 <div
-                  className={`flex size-14 items-center justify-center rounded-full text-[15px] font-bold ${
+                  className={`flex size-12 shrink-0 items-center justify-center rounded-full text-[14px] font-bold md:size-14 md:text-[15px] ${
                     isActive
                       ? "bg-white text-[#ff5a36] shadow-md"
                       : "bg-[#101412] text-[#faf9f5] ring-2 ring-[#101412]/20"
@@ -90,9 +90,19 @@ export function Process() {
                 >
                   {s.n}
                 </div>
-                <div>
-                  <p className={`mb-2 text-[19px] ${isActive ? "text-white" : "text-[#101412]"}`}>{s.t}</p>
-                  <p className={`text-[11px] leading-[1.45] ${isActive ? "text-[#ffe1d9]" : "text-[#69736d]"}`}>
+                <div className="min-w-0 pt-3">
+                  <p
+                    className={`mb-1.5 text-[16px] leading-tight md:text-[17px] ${
+                      isActive ? "text-white" : "text-[#101412]"
+                    }`}
+                  >
+                    {s.t}
+                  </p>
+                  <p
+                    className={`text-[11px] leading-[1.4] ${
+                      isActive ? "text-[#ffe1d9]" : "text-[#69736d]"
+                    }`}
+                  >
                     {s.d}
                   </p>
                 </div>
