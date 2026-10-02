@@ -1,3 +1,4 @@
+import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Why } from "@/components/Why";
 import { Technology } from "@/components/Technology";
@@ -14,6 +15,7 @@ import { ContactFooter } from "@/components/ContactFooter";
 export default function Home() {
   return (
     <main className="overflow-x-hidden">
+      <Navbar />
       <Hero />
       <Why />
       <Technology />
