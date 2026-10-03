@@ -21,7 +21,7 @@ export function Marker({ label, light }: { label: string; light?: boolean }) {
   );
 }
 
-/** Scroll-in reveal — once, never stuck at opacity 0 */
+/** Scroll reveal — fast, no blank flash, no stuck opacity 0 */
 export function Reveal({
   children,
   className = "",
@@ -48,44 +48,47 @@ export function Reveal({
     const isVisible = () => {
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      return r.top < vh * 1.15 && r.bottom > -40;
+      return r.top < vh + 120 && r.bottom > -60;
     };
 
-    if (isVisible()) {
-      setOn(true);
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setOn(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0, rootMargin: "40px 0px 25% 0px" }
-    );
-    io.observe(el);
-
-    const safety = window.setTimeout(() => {
-      if (isVisible()) setOn(true);
-    }, 1800);
-
-    const onScroll = () => {
+    let raf = requestAnimationFrame(() => {
       if (isVisible()) {
         setOn(true);
+        return;
+      }
+
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            setOn(true);
+            io.disconnect();
+          }
+        },
+        { threshold: 0, rootMargin: "60px 0px 30% 0px" }
+      );
+      io.observe(el);
+
+      const safety = window.setTimeout(() => setOn(true), 900);
+
+      const onScroll = () => {
+        if (isVisible()) {
+          setOn(true);
+          io.disconnect();
+          window.clearTimeout(safety);
+        }
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      (el as HTMLElement & { __revealCleanup?: () => void }).__revealCleanup = () => {
         io.disconnect();
         window.clearTimeout(safety);
-      }
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+        window.removeEventListener("scroll", onScroll);
+      };
+    });
 
     return () => {
-      io.disconnect();
-      window.clearTimeout(safety);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+      (el as HTMLElement & { __revealCleanup?: () => void }).__revealCleanup?.();
     };
   }, [on]);
 
@@ -93,57 +96,103 @@ export function Reveal({
     <Tag
       ref={ref as never}
       className={`reveal ${on ? "reveal-on" : ""} ${className}`}
-      style={{ transitionDelay: on ? `${delay}ms` : "0ms" } as CSSProperties}
+      style={{ transitionDelay: on ? `${Math.min(delay, 200)}ms` : "0ms" } as CSSProperties}
     >
       {children}
     </Tag>
   );
 }
 
-/** Count-up when in view */
+/** Count-up — starts on mount if immediate, else when in view. Never stuck at 0. */
 export function CountUp({
   end,
   suffix = "",
   decimals = 0,
-  duration = 1400,
+  duration = 1200,
   className = "",
+  immediate = false,
 }: {
   end: number;
   suffix?: string;
   decimals?: number;
   duration?: number;
   className?: string;
+  immediate?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [val, setVal] = useState(0);
   const [started, setStarted] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
+    if (started) return;
+
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVal(end);
+      setStarted(true);
+      setDone(true);
+      return;
+    }
+
+    if (immediate) {
+      setStarted(true);
+      return;
+    }
+
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      setStarted(true);
+      return;
+    }
+
+    const visible = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      return r.top < vh && r.bottom > 0;
+    };
+
+    if (visible()) {
+      setStarted(true);
+      return;
+    }
+
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) setStarted(true);
+        if (e.isIntersecting) {
+          setStarted(true);
+          io.disconnect();
+        }
       },
-      { threshold: 0.35 }
+      { threshold: 0, rootMargin: "80px 0px" }
     );
     io.observe(el);
-    return () => io.disconnect();
-  }, []);
+
+    const t = window.setTimeout(() => setStarted(true), 600);
+
+    return () => {
+      io.disconnect();
+      window.clearTimeout(t);
+    };
+  }, [started, immediate, end]);
 
   useEffect(() => {
-    if (!started) return;
+    if (!started || done) return;
     const t0 = performance.now();
     let raf = 0;
     const tick = (now: number) => {
       const p = Math.min(1, (now - t0) / duration);
       const eased = 1 - Math.pow(1 - p, 3);
       setVal(end * eased);
-      if (p < 1) raf = requestAnimationFrame(tick);
+      if (p < 1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        setVal(end);
+        setDone(true);
+      }
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [started, end, duration]);
+  }, [started, end, duration, done]);
 
   const display =
     decimals > 0
