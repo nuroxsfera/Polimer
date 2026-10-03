@@ -21,7 +21,7 @@ export function Marker({ label, light }: { label: string; light?: boolean }) {
   );
 }
 
-/** Scroll-in reveal — once, GPU-friendly */
+/** Scroll-in reveal — once, never stuck at opacity 0 */
 export function Reveal({
   children,
   className = "",
@@ -38,7 +38,24 @@ export function Reveal({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || on) return;
+
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setOn(true);
+      return;
+    }
+
+    const isVisible = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return r.top < vh * 1.15 && r.bottom > -40;
+    };
+
+    if (isVisible()) {
+      setOn(true);
+      return;
+    }
+
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -46,17 +63,37 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      { threshold: 0, rootMargin: "40px 0px 25% 0px" }
     );
     io.observe(el);
-    return () => io.disconnect();
-  }, []);
+
+    const safety = window.setTimeout(() => {
+      if (isVisible()) setOn(true);
+    }, 1800);
+
+    const onScroll = () => {
+      if (isVisible()) {
+        setOn(true);
+        io.disconnect();
+        window.clearTimeout(safety);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    return () => {
+      io.disconnect();
+      window.clearTimeout(safety);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [on]);
 
   return (
     <Tag
       ref={ref as never}
       className={`reveal ${on ? "reveal-on" : ""} ${className}`}
-      style={{ transitionDelay: `${delay}ms` } as CSSProperties}
+      style={{ transitionDelay: on ? `${delay}ms` : "0ms" } as CSSProperties}
     >
       {children}
     </Tag>
