@@ -81,13 +81,13 @@ export function LocationQuote() {
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) return;
-    const plain = `Заявка на просчёт — ПолимерКолор\nИмя/компания: ${name}\nТелефон: ${phone}\nЗадача: ${note || "—"}\n`;
+    const plain = `Заявка на расчёт — ПолимерКолор\nИмя/компания: ${name}\nТелефон: ${phone}\nЗадача: ${note || "—"}\n`;
     try {
       void navigator.clipboard?.writeText(plain);
     } catch {
       /* ignore */
     }
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Просчёт: ${name}`)}&body=${encodeURIComponent(plain)}`;
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Расчёт: ${name}`)}&body=${encodeURIComponent(plain)}`;
     setSent(true);
   }
 
@@ -201,7 +201,7 @@ export function LocationQuote() {
             ) : (
               <form onSubmit={onSubmit} className="flex flex-col gap-5">
                 <div>
-                  <p className="text-[22px] font-semibold text-white">Просчёт за минуту</p>
+                  <p className="text-[22px] font-semibold text-white">Расчёт за минуту</p>
                   <p className="mt-1 text-[13px] text-[#8a948e]">
                     Габарит, вес и срок — и мы ответим по возможности камеры
                   </p>
@@ -242,7 +242,7 @@ export function LocationQuote() {
                   type="submit"
                   className="btn-lift mt-2 flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#ff5a36] text-[15px] font-medium text-white shadow-[0_12px_40px_-10px_rgba(255,90,54,0.5)]"
                 >
-                  Отправить на просчёт <Arrow className="size-4" />
+                  Отправить на расчёт <Arrow className="size-4" />
                 </button>
                 <p className="text-center text-[11px] text-[#5c6560]">
                   Нажимая кнопку, вы соглашаетесь на связь по заявке
