@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { A, Arrow, Reveal } from "../shared";
 
 const SPECS = [
@@ -34,8 +33,6 @@ function FadeImg({ src, alt, className }: { src: string; alt: string; className?
 }
 
 export function Chamber() {
-  const [open, setOpen] = useState(false);
-
   return (
     <section id="kamera" className="bg-[#f4f2ec] px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
       <div className="mx-auto max-w-[1100px]">
@@ -87,38 +84,22 @@ export function Chamber() {
                   "Габарит и вес — сразу в заявке, проверим влезание",
                   "Цвет RAL / образец — согласуем до запуска партии",
                   "Срок от 2 дней при свободном слоте камеры",
-                ].map((t) => (
-                  <li key={t} className="flex gap-2">
+                ].map((line) => (
+                  <li key={line} className="flex gap-2">
                     <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#ff5a36]" />
-                    {t}
+                    {line}
                   </li>
                 ))}
               </ul>
             </div>
-            <button
-              type="button"
-              onClick={() => setOpen((v) => !v)}
-              className="btn-lift mt-6 flex h-11 items-center justify-center gap-2 rounded-full border border-[#101412]/15 text-[13px] font-medium text-[#101412] hover:bg-[#f4f2ec]"
-            >
-              {open ? "Свернуть" : "Полные характеристики"} <Arrow className="size-3.5" />
-            </button>
-          </Reveal>
-        </div>
-
-        <div
-          className={`grid transition-all duration-400 ease-out ${
-            open ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-          }`}
-        >
-          <div className="overflow-hidden">
-            <div className="rounded-2xl border border-[#e0ddd6] bg-white p-5 text-[14px] leading-[1.55] text-[#69736d] sm:p-6">
-              <p>
-                Параметры камеры ППП: <strong className="text-[#101412]">12 × 3 × 3 м</strong>,
-                грузоподъёмность до <strong className="text-[#101412]">3,5 т</strong>.
-                Изделия длиной до 12&nbsp;м — без разборки и резки.
+            <div className="mt-6 rounded-xl bg-[#f4f2ec] p-4 text-[13px] leading-[1.5] text-[#69736d]">
+              <p className="font-medium text-[#101412]">Весь цикл — у нас</p>
+              <p className="mt-1">
+                Подготовка, полимеризация и контроль качества на одной площадке.
+                Отвечаем не за этап, а за готовую поверхность.
               </p>
             </div>
-          </div>
+          </Reveal>
         </div>
 
         <Reveal className="mt-14">
