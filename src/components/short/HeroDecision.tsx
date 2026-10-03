@@ -35,19 +35,19 @@ export function HeroDecision() {
           <p className="hero-in hero-in-d1 text-[13px] font-medium uppercase tracking-[0.12em] text-[#ff5a36]">
             ПолимерКолор
           </p>
-          <h1 className="hero-in hero-in-d2 mt-2 text-[clamp(26px,5.2vw,44px)] font-semibold leading-[1.12] tracking-tight text-[#faf9f5]">
-            Полимерно-порошковое окрашивание металла
-            <span className="mt-1 block font-medium text-[#aeb7b1]">в&nbsp;Новосибирске</span>
+          <h1 className="hero-in hero-in-d2 mt-2 text-[clamp(26px,5.2vw,42px)] font-semibold leading-[1.12] tracking-tight text-[#faf9f5]">
+            Полимерно-порошковое покрытие
+            <span className="mt-1 block font-medium text-[#aeb7b1]">крупногабаритных изделий</span>
           </h1>
-          <p className="hero-in hero-in-d3 mt-4 max-w-[480px] text-[15px] leading-[1.55] text-[#9da7a1] sm:text-[17px]">
-            Длинномер и крупногабарит целиком — без разборки и порезки. Камера ППО до&nbsp;12&nbsp;м, 3×3&nbsp;м, до&nbsp;1,5&nbsp;т. Срок от&nbsp;2&nbsp;дней.
+          <p className="hero-in hero-in-d3 mt-4 max-w-[520px] text-[15px] leading-[1.55] text-[#9da7a1] sm:text-[17px]">
+            Изделия длиной до&nbsp;12&nbsp;м без разборки и резки. Параметры камеры ППП: 12×3×3&nbsp;м, грузоподъёмность до&nbsp;3,5&nbsp;т.
           </p>
 
           <div className="hero-in hero-in-d4 mt-8 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
             {[
               { n: 12, s: " м", l: "длина" },
               { n: 3, s: "×3 м", l: "сечение" },
-              { n: 1.5, s: " т", l: "нагрузка", dec: 1 },
+              { n: 3.5, s: " т", l: "нагрузка", dec: 1 },
               { n: 2, s: " дня", l: "от приёмки" },
             ].map((x) => (
               <div
@@ -97,9 +97,9 @@ export function HeroDecision() {
             <FadeImg src={A.capacity} alt="Полимерная камера" className="size-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#101412] via-[#101412]/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-              <p className="text-[11px] uppercase tracking-wider text-[#aeb7b1]">Камера ППО</p>
-              <p className="mt-1 text-[20px] font-medium text-white">10 × 3 × 3 м</p>
-              <p className="mt-1 text-[13px] text-[#9da7a1]">Рабочая зона под длинномер</p>
+              <p className="text-[11px] uppercase tracking-wider text-[#aeb7b1]">Камера ППП</p>
+              <p className="mt-1 text-[20px] font-medium text-white">12 × 3 × 3 м</p>
+              <p className="mt-1 text-[13px] text-[#9da7a1]">до 3,5 т · без разборки и резки</p>
             </div>
           </div>
         </div>
