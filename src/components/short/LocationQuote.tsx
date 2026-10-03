@@ -96,7 +96,41 @@ export function LocationQuote() {
       <div className="relative mx-auto grid max-w-[1100px] gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-12 lg:px-10">
         <Reveal>
           <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">Логистика</p>
-          <RouteTitle />
+
+          <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
+            <div className="relative aspect-[16/10] w-full bg-[#151a17] sm:aspect-[16/9]">
+              <iframe
+                title="ПолимерКолор на карте — Переездная 1"
+                src={MAP_SRC}
+                className="absolute inset-0 size-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+            <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-white/[0.03] px-4 py-3">
+              <div className="min-w-0">
+                <p className="truncate text-[13px] font-medium text-[#faf9f5]">{ADDRESS}</p>
+                <p className="text-[11px] text-[#7a847e]">Метка на карте</p>
+              </div>
+              <a
+                href={ROUTE_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-lift flex shrink-0 items-center gap-1.5 rounded-full bg-[#ff5a36] px-3.5 py-2 text-[12px] font-medium text-white"
+              >
+                Проложить маршрут
+                <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <RouteTitle />
+          </div>
+
           <p className="mt-4 text-[14px] leading-[1.55] text-[#9da7a1] sm:text-[15px]">
             {ADDRESS}. Удобно для металлоконструкций по городу и области. Заезд фуры уточняйте в заявке.
           </p>
@@ -126,36 +160,6 @@ export function LocationQuote() {
                 <p className="text-[10px] text-[#7a847e] sm:text-[11px]">{b}</p>
               </div>
             ))}
-          </div>
-
-          <div className="mt-8 overflow-hidden rounded-2xl border border-white/10">
-            <div className="relative aspect-[16/11] w-full bg-[#151a17] sm:aspect-[16/10]">
-              <iframe
-                title="ПолимерКолор на карте — Переездная 1"
-                src={MAP_SRC}
-                className="absolute inset-0 size-full border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
-            </div>
-            <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-white/[0.03] px-4 py-3">
-              <div className="min-w-0">
-                <p className="truncate text-[13px] font-medium text-[#faf9f5]">{ADDRESS}</p>
-                <p className="text-[11px] text-[#7a847e]">Метка на карте</p>
-              </div>
-              <a
-                href={ROUTE_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-lift flex shrink-0 items-center gap-1.5 rounded-full bg-[#ff5a36] px-3.5 py-2 text-[12px] font-medium text-white"
-              >
-                Проложить маршрут
-                <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-            </div>
           </div>
         </Reveal>
 
