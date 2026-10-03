@@ -131,36 +131,52 @@ export function LocationQuote() {
             <RouteTitle />
           </div>
 
-          <p className="mt-4 text-[14px] leading-[1.55] text-[#9da7a1] sm:text-[15px]">
-            {ADDRESS}. Удобно для металлоконструкций по городу и области. Заезд фуры уточняйте в заявке.
-          </p>
-
-          <div className="mt-6 space-y-2">
-            <a
-              href={`tel:${PHONE_TEL}`}
-              className="block text-[24px] font-semibold tracking-tight text-white transition hover:text-[#ff5a36] sm:text-[26px]"
-            >
-              {PHONE}
-            </a>
-            <p className="text-[13px] text-[#8a948e]">{EMAIL}</p>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-2.5 sm:gap-3">
-            {[
-              ["24 ч", "ответ по просчёту"],
-              ["от 2 дн.", "срок в работе"],
-              ["до 12 м", "без разборки"],
-              ["1,5 т", "на крюке"],
-            ].map(([a, b]) => (
-              <div
-                key={b}
-                className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 sm:px-4 sm:py-3"
-              >
-                <p className="text-[16px] font-semibold text-[#faf9f5] sm:text-[18px]">{a}</p>
-                <p className="text-[10px] text-[#7a847e] sm:text-[11px]">{b}</p>
+          <ul className="mt-6 space-y-4">
+            <li className="flex items-start gap-3">
+              <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-[#ff5a36]">
+                <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M12 21s7-5.2 7-11a7 7 0 10-14 0c0 5.8 7 11 7 11z" strokeLinecap="round" strokeLinejoin="round" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </span>
+              <div className="min-w-0 pt-1">
+                <p className="text-[11px] uppercase tracking-wide text-[#6f7973]">Адрес</p>
+                <p className="mt-0.5 text-[15px] leading-snug text-[#faf9f5]">{ADDRESS}</p>
+                <p className="mt-1 text-[12px] text-[#8a948e]">Заезд фуры уточняйте в заявке</p>
               </div>
-            ))}
-          </div>
+            </li>
+            <li>
+              <a href={`tel:${PHONE_TEL}`} className="flex items-start gap-3 transition hover:opacity-90">
+                <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-[#ff5a36]">
+                  <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path
+                      d="M6.6 3.8c.5-.5 1.3-.6 1.9-.2l2.2 1.4c.6.4.8 1.2.5 1.9l-.9 2.1a1.4 1.4 0 00.3 1.5l2.9 2.9c.4.4 1 .5 1.5.3l2.1-.9c.7-.3 1.5-.1 1.9.5l1.4 2.2c.4.6.3 1.4-.2 1.9l-1.1 1.1c-.6.6-1.4.9-2.2.8-2.2-.3-5.4-1.9-8.3-4.8S4.1 9.3 3.8 7.1c-.1-.8.2-1.6.8-2.2l1-.1z"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <div className="min-w-0 pt-1">
+                  <p className="text-[11px] uppercase tracking-wide text-[#6f7973]">Телефон</p>
+                  <p className="mt-0.5 text-[18px] font-semibold tracking-tight text-[#faf9f5]">{PHONE}</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${EMAIL}`} className="flex items-start gap-3 transition hover:opacity-90">
+                <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-[#ff5a36]">
+                  <svg className="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="M3 7l9 7 9-7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+                <div className="min-w-0 pt-1">
+                  <p className="text-[11px] uppercase tracking-wide text-[#6f7973]">Почта</p>
+                  <p className="mt-0.5 break-all text-[15px] text-[#faf9f5]">{EMAIL}</p>
+                </div>
+              </a>
+            </li>
+          </ul>
         </Reveal>
 
         <Reveal>
