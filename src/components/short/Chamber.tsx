@@ -57,7 +57,7 @@ export function Chamber() {
           {SPECS.map((s, i) => (
             <Reveal
               key={s.k}
-              delay={i * 70}
+              delay={i * 80}
               className="rounded-2xl border border-[#e0ddd6] bg-white p-4 shadow-[0_8px_30px_-16px_rgba(16,20,18,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_-16px_rgba(16,20,18,0.18)] sm:p-5"
             >
               <p className="text-[12px] uppercase tracking-wide text-[#8a948e]">{s.k}</p>
@@ -79,7 +79,7 @@ export function Chamber() {
             </div>
           </Reveal>
 
-          <Reveal delay={100} className="flex flex-col justify-between rounded-[24px] border border-[#e0ddd6] bg-white p-6">
+          <Reveal delay={0} className="flex flex-col justify-between rounded-[24px] border border-[#e0ddd6] bg-white p-6">
             <div>
               <p className="text-[13px] font-medium text-[#101412]">Что важно инженеру</p>
               <ul className="mt-4 space-y-3 text-[14px] leading-[1.45] text-[#69736d]">
@@ -153,11 +153,11 @@ export function Chamber() {
           </div>
         </Reveal>
 
-        <Reveal delay={80} className="mt-10 flex flex-col gap-4 rounded-2xl border border-[#e0ddd6] bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <Reveal delay={0} className="mt-10 flex flex-col gap-4 rounded-2xl border border-[#e0ddd6] bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div>
             <p className="text-[15px] font-medium text-[#101412]">Как считается цена</p>
             <p className="mt-1 max-w-[480px] text-[13px] leading-[1.5] text-[#69736d]">
-              Площадь, сложность подготовки, цвет и объём партии. Ориентир по рынку Новосибирска — в просчёте за рабочий день.
+              Площадь, сложность подготовки, цвет и объём партии. Ориентир по рынку Новосибирска — в расчёте за рабочий день.
             </p>
           </div>
           <a
