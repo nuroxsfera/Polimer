@@ -3,6 +3,12 @@
 import { useState, type FormEvent } from "react";
 import { Arrow, ADDRESS, EMAIL, PHONE, PHONE_TEL, Reveal } from "../shared";
 
+/** Переездная 1, Новосибирск (OSM) */
+const MAP_LAT = 55.1200291;
+const MAP_LON = 83.0046284;
+const MAP_SRC = `https://yandex.ru/map-widget/v1/?ll=${MAP_LON}%2C${MAP_LAT}&z=16&pt=${MAP_LON},${MAP_LAT},pm2rdm&l=map`;
+const MAP_LINK = `https://yandex.ru/maps/?pt=${MAP_LON},${MAP_LAT}&z=16&l=map`;
+
 export function LocationQuote() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,48 +30,72 @@ export function LocationQuote() {
 
   return (
     <section id="contact" className="relative overflow-hidden bg-[#101412]">
-      <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-[#ff5a36]/10 blur-[80px] animate-glow-breathe" />
-
-      <div className="relative mx-auto grid max-w-[1100px] gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:px-10">
+      <div className="relative mx-auto grid max-w-[1100px] gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-12 lg:px-10">
         <Reveal>
           <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">Логистика</p>
-          <h2 className="mt-2 text-[clamp(26px,4.5vw,40px)] font-semibold leading-[1.1] text-[#faf9f5]">
+          <h2 className="mt-2 whitespace-nowrap text-[clamp(17px,4.2vw,24px)] font-semibold leading-tight tracking-tight text-[#faf9f5]">
             Привезли — окрасили — забрали
           </h2>
-          <p className="mt-4 text-[15px] leading-[1.55] text-[#9da7a1]">
+          <p className="mt-3 text-[14px] leading-[1.55] text-[#9da7a1] sm:text-[15px]">
             {ADDRESS}. Удобно для металлоконструкций по городу и области. Заезд фуры уточняйте в заявке.
           </p>
 
-          <div className="mt-8 space-y-4">
+          <div className="mt-6 space-y-2">
             <a
               href={`tel:${PHONE_TEL}`}
-              className="block text-[28px] font-semibold tracking-tight text-white transition hover:text-[#ff5a36]"
+              className="block text-[24px] font-semibold tracking-tight text-white transition hover:text-[#ff5a36] sm:text-[26px]"
             >
               {PHONE}
             </a>
-            <p className="text-[14px] text-[#8a948e]">{EMAIL}</p>
+            <p className="text-[13px] text-[#8a948e]">{EMAIL}</p>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-3">
+          <div className="mt-6 grid grid-cols-2 gap-2.5 sm:gap-3">
             {[
               ["24 ч", "ответ по просчёту"],
               ["от 2 дн.", "срок в работе"],
               ["до 12 м", "без разборки"],
               ["1,5 т", "на крюке"],
-            ].map(([a, b], i) => (
-              <Reveal
+            ].map(([a, b]) => (
+              <div
                 key={b}
-                delay={i * 60}
-                className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition hover:border-white/20 hover:bg-white/[0.05]"
+                className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 sm:px-4 sm:py-3"
               >
-                <p className="text-[18px] font-semibold text-[#faf9f5]">{a}</p>
-                <p className="text-[11px] text-[#7a847e]">{b}</p>
-              </Reveal>
+                <p className="text-[16px] font-semibold text-[#faf9f5] sm:text-[18px]">{a}</p>
+                <p className="text-[10px] text-[#7a847e] sm:text-[11px]">{b}</p>
+              </div>
             ))}
+          </div>
+
+          <div className="mt-8 overflow-hidden rounded-2xl border border-white/10">
+            <div className="relative aspect-[16/11] w-full bg-[#151a17] sm:aspect-[16/10]">
+              <iframe
+                title="ПолимерКолор на карте — Переездная 1"
+                src={MAP_SRC}
+                className="absolute inset-0 size-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+            <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-white/[0.03] px-4 py-3">
+              <div className="min-w-0">
+                <p className="truncate text-[13px] font-medium text-[#faf9f5]">{ADDRESS}</p>
+                <p className="text-[11px] text-[#7a847e]">Метка на карте</p>
+              </div>
+              <a
+                href={MAP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 rounded-full border border-white/15 px-3.5 py-2 text-[12px] text-[#e8ece9] transition hover:border-white/30 hover:bg-white/5"
+              >
+                Открыть карту
+              </a>
+            </div>
           </div>
         </Reveal>
 
-        <Reveal delay={120}>
+        <Reveal>
           <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-6 shadow-[0_24px_80px_-30px_rgba(0,0,0,0.5)] backdrop-blur-sm sm:p-8">
             {sent ? (
               <div className="flex min-h-[280px] flex-col justify-center">
