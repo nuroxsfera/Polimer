@@ -43,83 +43,113 @@ body {
   color: white;
 }
 
-/* ——— Smooth reveal, no delay before start ——— */
-.reveal {
-  opacity: 0;
-  transform: translate3d(0, 16px, 0);
-  transition:
-    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal-on {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+/* ——— Motion from long landing (stable, smooth) ——— */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
-@keyframes hero-in {
-  from { opacity: 0; transform: translate3d(0, 20px, 0); }
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
+@keyframes float-y {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-14px) rotate(-1.5deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-10px) rotate(1.2deg); }
 }
-.hero-in {
-  animation: hero-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.14; transform: scale(0.92); }
+  50% { opacity: 0.28; transform: scale(1.08); }
 }
-.hero-in-d1 { animation-delay: 0.08s; }
-.hero-in-d2 { animation-delay: 0.16s; }
-.hero-in-d3 { animation-delay: 0.24s; }
-.hero-in-d4 { animation-delay: 0.32s; }
-.hero-in-d5 { animation-delay: 0.4s; }
 
 @keyframes soft-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-.animate-soft-float {
-  animation: soft-float 5s ease-in-out infinite;
+  50% { transform: translateY(-6px); }
 }
 
 @keyframes status-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
-}
-.animate-status {
-  animation: status-pulse 2.2s ease-in-out infinite;
+  50% { opacity: 0.55; transform: scale(0.88); }
 }
 
 @keyframes glow-breathe {
   0%, 100% { opacity: 0.12; }
   50% { opacity: 0.22; }
 }
+
+.animate-reveal {
+  animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+}
+.reveal-on {
+  animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-float {
+  animation: float-y 16s ease-in-out infinite;
+}
+.animate-glow {
+  animation: glow-pulse 16s ease-in-out infinite;
+}
+.animate-soft-float {
+  animation: soft-float 6s ease-in-out infinite;
+}
+.animate-status {
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
 .animate-glow-breathe {
   animation: glow-breathe 8s ease-in-out infinite;
 }
 
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-700 { animation-delay: 700ms; }
+
+.hero-in {
+  animation: reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-in-d1 { animation-delay: 100ms; }
+.hero-in-d2 { animation-delay: 200ms; }
+.hero-in-d3 { animation-delay: 300ms; }
+.hero-in-d4 { animation-delay: 400ms; }
+.hero-in-d5 { animation-delay: 500ms; }
+
 .btn-lift {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
 }
-.btn-lift:hover {
-  transform: translateY(-2px);
-}
-.btn-lift:active {
-  transform: translateY(0);
-}
+.btn-lift:hover { transform: translateY(-2px); }
+.btn-lift:active { transform: translateY(0); }
 
 .img-fade {
-  opacity: 0.4;
-  transition: opacity 0.35s ease;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
   background: #1a1f1c;
 }
-.img-fade.loaded {
-  opacity: 1;
-}
+.img-fade.loaded { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .reveal-on {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .reveal-on,
+  .animate-reveal,
+  .hero-in {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
-  .hero-in,
+  .animate-float,
+  .animate-glow,
   .animate-soft-float,
   .animate-status,
   .animate-glow-breathe {

@@ -21,7 +21,10 @@ export function Marker({ label, light }: { label: string; light?: boolean }) {
   );
 }
 
-/** Smooth reveal on scroll — no wait, no timeout flash */
+/**
+ * Scroll reveal — same motion as long landing:
+ * opacity 0 until in view, then CSS keyframe reveal-up 0.9s.
+ */
 export function Reveal({
   children,
   className = "",
@@ -45,27 +48,14 @@ export function Reveal({
       return;
     }
 
-    const show = () => setOn(true);
-
-    const isVisible = () => {
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      return r.top < vh + 80 && r.bottom > -40;
-    };
-
-    if (isVisible()) {
-      requestAnimationFrame(() => requestAnimationFrame(show));
-      return;
-    }
-
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
-          show();
+          setOn(true);
           io.disconnect();
         }
       },
-      { threshold: 0.08, rootMargin: "0px 0px 12% 0px" }
+      { threshold: 0.15, rootMargin: "0px 0px -5% 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -75,23 +65,19 @@ export function Reveal({
     <Tag
       ref={ref as never}
       className={`reveal ${on ? "reveal-on" : ""} ${className}`}
-      style={
-        delay > 0 && on
-          ? ({ transitionDelay: `${Math.min(delay, 100)}ms` } as CSSProperties)
-          : undefined
-      }
+      style={delay > 0 && on ? ({ animationDelay: `${delay}ms` } as CSSProperties) : undefined}
     >
       {children}
     </Tag>
   );
 }
 
-/** Count-up — starts on mount if immediate, else when in view. Never stuck at 0. */
+/** Count-up when in view (or immediately for hero) */
 export function CountUp({
   end,
   suffix = "",
   decimals = 0,
-  duration = 1200,
+  duration = 1600,
   className = "",
   immediate = false,
 }: {
@@ -105,7 +91,6 @@ export function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
   const [val, setVal] = useState(0);
   const [started, setStarted] = useState(false);
-  const [done, setDone] = useState(false);
 
   useEffect(() => {
     if (started) return;
@@ -113,31 +98,16 @@ export function CountUp({
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setVal(end);
       setStarted(true);
-      setDone(true);
       return;
     }
 
     if (immediate) {
-      setStarted(true);
-      return;
+      const t = window.setTimeout(() => setStarted(true), 80);
+      return () => window.clearTimeout(t);
     }
 
     const el = ref.current;
-    if (!el) {
-      setStarted(true);
-      return;
-    }
-
-    const visible = () => {
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight || 800;
-      return r.top < vh && r.bottom > 0;
-    };
-
-    if (visible()) {
-      setStarted(true);
-      return;
-    }
+    if (!el) return;
 
     const io = new IntersectionObserver(
       ([e]) => {
@@ -146,36 +116,26 @@ export function CountUp({
           io.disconnect();
         }
       },
-      { threshold: 0, rootMargin: "80px 0px" }
+      { threshold: 0.4 }
     );
     io.observe(el);
-
-    const t = window.setTimeout(() => setStarted(true), 600);
-
-    return () => {
-      io.disconnect();
-      window.clearTimeout(t);
-    };
+    return () => io.disconnect();
   }, [started, immediate, end]);
 
   useEffect(() => {
-    if (!started || done) return;
+    if (!started) return;
     const t0 = performance.now();
     let raf = 0;
     const tick = (now: number) => {
       const p = Math.min(1, (now - t0) / duration);
       const eased = 1 - Math.pow(1 - p, 3);
       setVal(end * eased);
-      if (p < 1) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        setVal(end);
-        setDone(true);
-      }
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else setVal(end);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [started, end, duration, done]);
+  }, [started, end, duration]);
 
   const display =
     decimals > 0
