@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Arrow, PHONE, PHONE_TEL } from "./shared";
 
 const NAV = [
-  { label: "Камера", href: "#kamera" },
+  { label: "Услуга", href: "#service" },
   { label: "Расчёт", href: "#contact" },
 ];
 
