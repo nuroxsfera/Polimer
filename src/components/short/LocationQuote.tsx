@@ -1,13 +1,76 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Arrow, ADDRESS, EMAIL, PHONE, PHONE_TEL, Reveal } from "../shared";
 
-/** Переездная 1, Новосибирск (OSM) */
 const MAP_LAT = 55.1200291;
 const MAP_LON = 83.0046284;
 const MAP_SRC = `https://yandex.ru/map-widget/v1/?ll=${MAP_LON}%2C${MAP_LAT}&z=16&pt=${MAP_LON},${MAP_LAT},pm2rdm&l=map`;
-const MAP_LINK = `https://yandex.ru/maps/?pt=${MAP_LON},${MAP_LAT}&z=16&l=map`;
+const ROUTE_LINK = `https://yandex.ru/maps/?rtext=~${MAP_LAT}%2C${MAP_LON}&rtt=auto`;
+
+const STEPS = ["Привезли", "окрасили", "забрали"] as const;
+
+function RouteTitle() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setActive((i) => (i + 1) % STEPS.length);
+    }, 2000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <h2 className="mt-2 w-full max-w-full">
+      <span className="sr-only">Привезли — окрасили — забрали</span>
+      <div className="relative mb-3 h-[3px] rounded-full bg-white/10">
+        <div
+          className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff5a36] shadow-[0_0_12px_rgba(255,90,54,0.7)] transition-[left] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{ left: `${(active / (STEPS.length - 1)) * 100}%` }}
+        />
+        <div
+          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#ff5a36]/80 to-[#ff5a36]/30 transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{ width: `${(active / (STEPS.length - 1)) * 100}%` }}
+        />
+      </div>
+      <div className="flex items-start justify-between gap-1 sm:gap-2">
+        {STEPS.map((label, i) => {
+          const isOn = i === active;
+          const isDone = i < active;
+          return (
+            <div
+              key={label}
+              className={`flex min-w-0 flex-1 flex-col items-center text-center ${
+                i === 0 ? "items-start text-left" : i === STEPS.length - 1 ? "items-end text-right" : ""
+              }`}
+            >
+              <span
+                className={`mb-1.5 flex size-2.5 rounded-full transition-all duration-500 ${
+                  isOn
+                    ? "scale-125 bg-[#ff5a36] shadow-[0_0_0_4px_rgba(255,90,54,0.25)]"
+                    : isDone
+                      ? "bg-[#ff5a36]/70"
+                      : "bg-white/20"
+                }`}
+              />
+              <span
+                className={`text-[clamp(14px,3.6vw,20px)] font-semibold leading-tight tracking-tight transition-all duration-500 ${
+                  isOn
+                    ? "translate-y-0 text-[#faf9f5] opacity-100"
+                    : isDone
+                      ? "text-[#aeb7b1] opacity-80"
+                      : "text-[#5c6560] opacity-70"
+                }`}
+              >
+                {label}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </h2>
+  );
+}
 
 export function LocationQuote() {
   const [name, setName] = useState("");
@@ -33,10 +96,8 @@ export function LocationQuote() {
       <div className="relative mx-auto grid max-w-[1100px] gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-12 lg:px-10">
         <Reveal>
           <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">Логистика</p>
-          <h2 className="mt-2 whitespace-nowrap text-[clamp(17px,4.2vw,24px)] font-semibold leading-tight tracking-tight text-[#faf9f5]">
-            Привезли — окрасили — забрали
-          </h2>
-          <p className="mt-3 text-[14px] leading-[1.55] text-[#9da7a1] sm:text-[15px]">
+          <RouteTitle />
+          <p className="mt-4 text-[14px] leading-[1.55] text-[#9da7a1] sm:text-[15px]">
             {ADDRESS}. Удобно для металлоконструкций по городу и области. Заезд фуры уточняйте в заявке.
           </p>
 
@@ -84,12 +145,15 @@ export function LocationQuote() {
                 <p className="text-[11px] text-[#7a847e]">Метка на карте</p>
               </div>
               <a
-                href={MAP_LINK}
+                href={ROUTE_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 rounded-full border border-white/15 px-3.5 py-2 text-[12px] text-[#e8ece9] transition hover:border-white/30 hover:bg-white/5"
+                className="btn-lift flex shrink-0 items-center gap-1.5 rounded-full bg-[#ff5a36] px-3.5 py-2 text-[12px] font-medium text-white"
               >
-                Открыть карту
+                Проложить маршрут
+                <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </a>
             </div>
           </div>
