@@ -5,7 +5,7 @@ import { Arrow, PHONE, PHONE_TEL } from "./shared";
 
 const NAV = [
   { label: "Камера", href: "#kamera" },
-  { label: "Просчёт", href: "#contact" },
+  { label: "Расчёт", href: "#contact" },
 ];
 
 export function Navbar() {
@@ -92,7 +92,7 @@ export function Navbar() {
             }}
             className="btn-lift flex h-10 items-center gap-1.5 rounded-full bg-[#ff5a36] px-4 text-[12px] font-medium text-white"
           >
-            Просчёт <Arrow className="size-3.5" />
+            Расчёт <Arrow className="size-3.5" />
           </a>
         </nav>
 
@@ -140,7 +140,7 @@ export function Navbar() {
             }}
             className="mt-2 flex h-12 items-center justify-center rounded-full bg-[#ff5a36] text-[15px] font-medium text-white"
           >
-            Получить просчёт
+            Получить расчёт
           </a>
         </div>
       )}

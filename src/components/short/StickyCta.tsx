@@ -14,7 +14,7 @@ export function StickyCta() {
           }}
           className="flex h-12 flex-1 items-center justify-center rounded-xl bg-[#ff5a36] text-[14px] font-semibold text-white"
         >
-          Просчёт
+          Расчёт
         </a>
         <a
           href={`tel:${PHONE_TEL}`}
