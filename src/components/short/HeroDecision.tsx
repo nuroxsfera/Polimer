@@ -71,7 +71,7 @@ export function HeroDecision() {
               }}
               className="btn-lift flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#ff5a36] px-7 text-[15px] font-medium text-white shadow-[0_12px_40px_-10px_rgba(255,90,54,0.55)]"
             >
-              Получить просчёт <Arrow className="size-4" />
+              Получить расчёт <Arrow className="size-4" />
             </a>
             <a
               href="#kamera"
@@ -109,7 +109,7 @@ export function HeroDecision() {
         <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-4 px-4 py-4 text-[12px] text-[#7a847e] sm:px-6 lg:px-10">
           <span>Для заводов МК, стройки, сварки</span>
           <span className="hidden h-3 w-px bg-white/15 sm:block" />
-          <span>Ответ по просчёту — в рабочий день</span>
+          <span>Ответ по расчёту — в рабочий день</span>
           <span className="hidden h-3 w-px bg-white/15 sm:block" />
           <span>RAL / каталог по запросу</span>
         </div>
