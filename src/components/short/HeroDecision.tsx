@@ -24,8 +24,8 @@ export function HeroDecision() {
             <span className="mt-1 block font-medium text-[#aeb7b1]">крупногабаритных изделий</span>
           </h1>
           <p className="hero-in hero-in-d3 mt-5 max-w-[540px] text-[16px] leading-[1.55] text-[#9da7a1] sm:text-[18px]">
-            Красим металл целиком — без разборки и резки. Один подрядчик: подготовка,
-            полимеризация и контроль. Готовая поверхность, а не «просто этап в цеху».
+            Изделия длиной до 12&nbsp;м без разборки и резки. Камера ППП 12×3×3&nbsp;м,
+            грузоподъёмность до 3,5&nbsp;т. Новосибирск.
           </p>
 
           <div className="hero-in hero-in-d4 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -40,14 +40,14 @@ export function HeroDecision() {
               Получить расчёт <Arrow className="size-4" />
             </a>
             <a
-              href="#service"
+              href="#kamera"
               onClick={(e) => {
                 e.preventDefault();
-                document.querySelector("#service")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                document.querySelector("#kamera")?.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
               className="btn-lift flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/20 px-6 text-[14px] text-[#e8ece9] hover:border-white/40 hover:bg-white/5"
             >
-              Как работаем
+              Характеристики
             </a>
             <a
               href={`tel:${PHONE_TEL}`}
