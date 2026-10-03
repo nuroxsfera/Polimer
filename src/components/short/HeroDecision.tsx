@@ -11,7 +11,7 @@ function FadeImg({ src, alt, className }: { src: string; alt: string; className?
       className={`img-fade ${className ?? ""}`}
       onLoad={(e) => e.currentTarget.classList.add("loaded")}
       onError={(e) => {
-        e.currentTarget.style.opacity = "0.15";
+        e.currentTarget.style.opacity = "0.25";
         e.currentTarget.classList.add("loaded");
       }}
     />
@@ -56,7 +56,7 @@ export function HeroDecision() {
                 className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.02] px-3 py-4 backdrop-blur-sm transition duration-300 hover:border-white/20 hover:bg-white/[0.06]"
               >
                 <p className="text-[26px] font-semibold leading-none tracking-tight text-[#faf9f5] sm:text-[28px]">
-                  <CountUp end={x.n} suffix={x.s} decimals={x.dec ?? 0} />
+                  <CountUp end={x.n} suffix={x.s} decimals={x.dec ?? 0} immediate duration={1100} />
                 </p>
                 <p className="mt-2 text-[11px] uppercase tracking-wide text-[#6f7973]">{x.l}</p>
               </div>
@@ -86,7 +86,7 @@ export function HeroDecision() {
         </div>
 
         <div className="hero-in hero-in-d3 relative">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/10 sm:aspect-[5/6] lg:aspect-[4/5]">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-white/10 bg-[#151a17] sm:aspect-[5/6] lg:aspect-[4/5]">
             <FadeImg src={A.capacity} alt="Полимерная камера" className="size-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#101412] via-[#101412]/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
