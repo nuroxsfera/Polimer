@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { Arrow, ADDRESS, EMAIL, PHONE, PHONE_TEL, Reveal } from "../shared";
 
 const MAP_LAT = 55.1200291;
 const MAP_LON = 83.0046284;
 const MAP_SRC = `https://yandex.ru/map-widget/v1/?ll=${MAP_LON}%2C${MAP_LAT}&z=16&pt=${MAP_LON},${MAP_LAT},pm2rdm&l=map`;
 const ROUTE_LINK = `https://yandex.ru/maps/?rtext=~${MAP_LAT}%2C${MAP_LON}&rtt=auto`;
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`;
 
 const STEPS = ["Привезли", "окрасили", "забрали"] as const;
 
@@ -56,7 +58,7 @@ function RouteTitle() {
               <span
                 className={`text-[clamp(14px,3.6vw,20px)] font-semibold leading-tight tracking-tight transition-all duration-500 ${
                   isOn
-                    ? "translate-y-0 text-[#faf9f5] opacity-100"
+                    ? "text-[#faf9f5] opacity-100"
                     : isDone
                       ? "text-[#aeb7b1] opacity-80"
                       : "text-[#5c6560] opacity-70"
@@ -77,18 +79,50 @@ export function LocationQuote() {
   const [phone, setPhone] = useState("");
   const [note, setNote] = useState("");
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) return;
-    const plain = `Заявка на расчёт — ПолимерКолор\nИмя/компания: ${name}\nТелефон: ${phone}\nЗадача: ${note || "—"}\n`;
+    setLoading(true);
+    setError("");
+
+    const payload = {
+      name: name.trim(),
+      phone: phone.trim(),
+      message: note.trim() || "—",
+      _subject: `Расчёт: ${name.trim()}`,
+      _template: "table",
+      _captcha: "false",
+    };
+
     try {
-      void navigator.clipboard?.writeText(plain);
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("fail");
+      setSent(true);
+      setName("");
+      setPhone("");
+      setNote("");
     } catch {
-      /* ignore */
+      const plain = `Заявка на расчёт — ПолимерКолор\nИмя/компания: ${name}\nТелефон: ${phone}\nЗадача: ${note || "—"}\n`;
+      try {
+        void navigator.clipboard?.writeText(plain);
+      } catch {
+        /* ignore */
+      }
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Расчёт: ${name}`)}&body=${encodeURIComponent(plain)}`;
+      setSent(true);
+    } finally {
+      setLoading(false);
     }
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Расчёт: ${name}`)}&body=${encodeURIComponent(plain)}`;
-    setSent(true);
   }
 
   return (
@@ -109,10 +143,7 @@ export function LocationQuote() {
               />
             </div>
             <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-white/[0.03] px-4 py-3">
-              <div className="min-w-0">
-                <p className="truncate text-[13px] font-medium text-[#faf9f5]">{ADDRESS}</p>
-                <p className="text-[11px] text-[#7a847e]">Метка на карте</p>
-              </div>
+              <p className="min-w-0 truncate text-[13px] font-medium text-[#faf9f5]">{ADDRESS}</p>
               <a
                 href={ROUTE_LINK}
                 target="_blank"
@@ -186,9 +217,9 @@ export function LocationQuote() {
                 <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-[#d7ff55] text-xl text-[#101412]">
                   ✓
                 </div>
-                <p className="text-[24px] font-semibold text-white">Заявка готова</p>
+                <p className="text-[24px] font-semibold text-white">Заявка отправлена</p>
                 <p className="mt-2 text-[14px] leading-[1.5] text-[#aeb7b1]">
-                  Откроется почта с заполненным письмом. Текст скопирован в буфер. Можно сразу позвонить: {PHONE}
+                  Мы получили данные. Ответим в рабочий день. Можно позвонить: {PHONE}
                 </p>
                 <button
                   type="button"
@@ -203,7 +234,7 @@ export function LocationQuote() {
                 <div>
                   <p className="text-[22px] font-semibold text-white">Расчёт за минуту</p>
                   <p className="mt-1 text-[13px] text-[#8a948e]">
-                    Габарит, вес и срок — и мы ответим по возможности камеры
+                    Габарит, вес и срок — ответим по возможности камеры
                   </p>
                 </div>
                 <label className="block">
@@ -213,6 +244,7 @@ export function LocationQuote() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="ООО «Металл» / Иван"
+                    autoComplete="organization"
                     className="mt-1.5 w-full border-b border-white/15 bg-transparent pb-2 text-[15px] text-white outline-none transition placeholder:text-white/30 focus:border-[#ff5a36]"
                   />
                 </label>
@@ -224,6 +256,7 @@ export function LocationQuote() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+7 …"
+                    autoComplete="tel"
                     className="mt-1.5 w-full border-b border-white/15 bg-transparent pb-2 text-[15px] text-white outline-none transition placeholder:text-white/30 focus:border-[#ff5a36]"
                   />
                 </label>
@@ -238,14 +271,20 @@ export function LocationQuote() {
                     className="mt-1.5 w-full border-b border-white/15 bg-transparent pb-2 text-[15px] text-white outline-none transition placeholder:text-white/30 focus:border-[#ff5a36]"
                   />
                 </label>
+                {error ? <p className="text-[13px] text-[#ff5a36]">{error}</p> : null}
                 <button
                   type="submit"
-                  className="btn-lift mt-2 flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#ff5a36] text-[15px] font-medium text-white shadow-[0_12px_40px_-10px_rgba(255,90,54,0.5)]"
+                  disabled={loading}
+                  className="btn-lift mt-2 flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#ff5a36] text-[15px] font-medium text-white shadow-[0_12px_40px_-10px_rgba(255,90,54,0.5)] disabled:opacity-60"
                 >
-                  Отправить на расчёт <Arrow className="size-4" />
+                  {loading ? "Отправляем…" : "Отправить на расчёт"}
+                  {!loading ? <Arrow className="size-4" /> : null}
                 </button>
-                <p className="text-center text-[11px] text-[#5c6560]">
-                  Нажимая кнопку, вы соглашаетесь на связь по заявке
+                <p className="text-center text-[11px] leading-relaxed text-[#5c6560]">
+                  Нажимая кнопку, вы соглашаетесь с{" "}
+                  <Link href="/privacy" className="text-[#aeb7b1] underline-offset-2 hover:text-white hover:underline">
+                    политикой обработки персональных данных
+                  </Link>
                 </p>
               </form>
             )}
@@ -256,7 +295,9 @@ export function LocationQuote() {
       <footer className="relative border-t border-white/8">
         <div className="mx-auto flex max-w-[1100px] flex-col gap-3 px-4 py-6 text-[12px] text-[#5c6560] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-10">
           <span>© {new Date().getFullYear()} ПолимерКолор</span>
-          <span>{ADDRESS}</span>
+          <Link href="/privacy" className="text-[#8a948e] transition hover:text-white">
+            Политика ПДн
+          </Link>
           <a href={`tel:${PHONE_TEL}`} className="text-[#aeb7b1] transition hover:text-white">
             {PHONE}
           </a>
