@@ -4,10 +4,10 @@ import { useState } from "react";
 import { A, Arrow, Reveal } from "../shared";
 
 const SPECS = [
-  { k: "Длина", v: "8–12 м", sub: "типовая ~10 м" },
+  { k: "Длина", v: "12 м", sub: "рабочая" },
   { k: "Ширина", v: "3 м", sub: "рабочая" },
   { k: "Высота", v: "3 м", sub: "рабочая" },
-  { k: "Нагрузка", v: "1,5 т", sub: "макс." },
+  { k: "Нагрузка", v: "3,5 т", sub: "макс." },
 ];
 
 const ITEMS = [
@@ -42,14 +42,14 @@ export function Chamber() {
         <Reveal className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">
-              Полимерная камера ППО
+              Полимерная камера ППП
             </p>
             <h2 className="mt-2 text-[clamp(26px,4.5vw,40px)] font-semibold leading-[1.1] tracking-tight text-[#101412]">
               Влезет ли ваша деталь
             </h2>
           </div>
           <p className="max-w-[340px] text-[14px] leading-[1.5] text-[#69736d]">
-            Крупногабарит и длинномер целиком — без разборки. Полимеризация, прочное покрытие, срок от 2 дней.
+            Изделия длиной до 12 м без разборки и резки. Камера 12×3×3 м, до 3,5 т.
           </p>
         </Reveal>
 
@@ -74,7 +74,7 @@ export function Chamber() {
             <div className="absolute bottom-5 left-5 right-5">
               <p className="text-[13px] text-white/80">Производство · Новосибирск</p>
               <p className="mt-1 max-w-[280px] text-[18px] font-medium leading-snug text-white">
-                Одна камера — от мелкого узла до фермы 12&nbsp;м
+                Одна камера — изделия до 12&nbsp;м, до 3,5&nbsp;т
               </p>
             </div>
           </Reveal>
@@ -113,10 +113,9 @@ export function Chamber() {
           <div className="overflow-hidden">
             <div className="rounded-2xl border border-[#e0ddd6] bg-white p-5 text-[14px] leading-[1.55] text-[#69736d] sm:p-6">
               <p>
-                Рабочая длина <strong className="text-[#101412]">8–12 м</strong> (камера ориентировочно{" "}
-                <strong className="text-[#101412]">10 × 3 × 3 м</strong>), грузоподъёмность до{" "}
-                <strong className="text-[#101412]">1,5 т</strong>. Окраска длинномера и крупногабарита
-                целиком, без разборки и порезки.
+                Параметры камеры ППП: <strong className="text-[#101412]">12 × 3 × 3 м</strong>,
+                грузоподъёмность до <strong className="text-[#101412]">3,5 т</strong>.
+                Изделия длиной до 12&nbsp;м — без разборки и резки.
               </p>
             </div>
           </div>
