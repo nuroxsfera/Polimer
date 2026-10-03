@@ -21,7 +21,7 @@ export function Marker({ label, light }: { label: string; light?: boolean }) {
   );
 }
 
-/** Scroll reveal — fast, no blank flash, no stuck opacity 0 */
+/** Smooth reveal on scroll — no wait, no timeout flash */
 export function Reveal({
   children,
   className = "",
@@ -45,58 +45,41 @@ export function Reveal({
       return;
     }
 
+    const show = () => setOn(true);
+
     const isVisible = () => {
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      return r.top < vh + 120 && r.bottom > -60;
+      return r.top < vh + 80 && r.bottom > -40;
     };
 
-    let raf = requestAnimationFrame(() => {
-      if (isVisible()) {
-        setOn(true);
-        return;
-      }
+    if (isVisible()) {
+      requestAnimationFrame(() => requestAnimationFrame(show));
+      return;
+    }
 
-      const io = new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) {
-            setOn(true);
-            io.disconnect();
-          }
-        },
-        { threshold: 0, rootMargin: "60px 0px 30% 0px" }
-      );
-      io.observe(el);
-
-      const safety = window.setTimeout(() => setOn(true), 900);
-
-      const onScroll = () => {
-        if (isVisible()) {
-          setOn(true);
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          show();
           io.disconnect();
-          window.clearTimeout(safety);
         }
-      };
-      window.addEventListener("scroll", onScroll, { passive: true });
-
-      (el as HTMLElement & { __revealCleanup?: () => void }).__revealCleanup = () => {
-        io.disconnect();
-        window.clearTimeout(safety);
-        window.removeEventListener("scroll", onScroll);
-      };
-    });
-
-    return () => {
-      cancelAnimationFrame(raf);
-      (el as HTMLElement & { __revealCleanup?: () => void }).__revealCleanup?.();
-    };
+      },
+      { threshold: 0.08, rootMargin: "0px 0px 12% 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, [on]);
 
   return (
     <Tag
       ref={ref as never}
       className={`reveal ${on ? "reveal-on" : ""} ${className}`}
-      style={{ transitionDelay: on ? `${Math.min(delay, 200)}ms` : "0ms" } as CSSProperties}
+      style={
+        delay > 0 && on
+          ? ({ transitionDelay: `${Math.min(delay, 100)}ms` } as CSSProperties)
+          : undefined
+      }
     >
       {children}
     </Tag>

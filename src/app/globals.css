@@ -43,22 +43,17 @@ body {
   color: white;
 }
 
+/* ——— Smooth reveal, no delay before start ——— */
 .reveal {
-  opacity: 0.001;
-  transform: translate3d(0, 12px, 0);
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
   transition:
-    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .reveal-on {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-}
-@keyframes reveal-fallback {
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-.reveal:not(.reveal-on) {
-  animation: reveal-fallback 0.35s 0.85s forwards;
 }
 
 @keyframes hero-in {
@@ -119,12 +114,10 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .reveal-on,
-  .reveal:not(.reveal-on) {
+  .reveal-on {
     opacity: 1;
     transform: none;
     transition: none;
-    animation: none !important;
   }
   .hero-in,
   .animate-soft-float,
