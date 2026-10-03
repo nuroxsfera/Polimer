@@ -2,11 +2,23 @@
 
 import { A, Arrow, Reveal } from "../shared";
 
-const SPECS = [
-  { k: "Длина", v: "12 м", sub: "рабочая" },
-  { k: "Ширина", v: "3 м", sub: "рабочая" },
-  { k: "Высота", v: "3 м", sub: "рабочая" },
-  { k: "Нагрузка", v: "3,5 т", sub: "макс." },
+const BENEFITS = [
+  {
+    t: "Целиком, без резки",
+    d: "Длинномер и крупногабарит до 12 м окрашиваем без разборки — меньше стыков, ровнее покрытие.",
+  },
+  {
+    t: "Прочная поверхность",
+    d: "Порошковый полимер: стойкость к коррозии, ударам и ультрафиолету. Подбираем цвет RAL под задачу.",
+  },
+  {
+    t: "Один цикл — одна ответственность",
+    d: "Подготовка, полимеризация и контроль качества на нашей площадке. Отвечаем за результат, а не за этап.",
+  },
+  {
+    t: "Срок под объект",
+    d: "От 2 дней при свободном слоте. Для горящих поставок металлоконструкций — сразу в заявке указывайте дату.",
+  },
 ];
 
 const ITEMS = [
@@ -14,6 +26,13 @@ const ITEMS = [
   { t: "Ворота, калитки", img: A.urban },
   { t: "Каркасы", img: A.equipment },
   { t: "Ограждения", img: A.transport },
+];
+
+const SPECS = [
+  { k: "Длина", v: "12 м" },
+  { k: "Сечение", v: "3 × 3 м" },
+  { k: "Нагрузка", v: "до 3,5 т" },
+  { k: "Срок", v: "от 2 дн." },
 ];
 
 function FadeImg({ src, alt, className }: { src: string; alt: string; className?: string }) {
@@ -34,89 +53,54 @@ function FadeImg({ src, alt, className }: { src: string; alt: string; className?
 
 export function Chamber() {
   return (
-    <section id="kamera" className="bg-[#f4f2ec] px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
+    <section id="service" className="bg-[#f4f2ec] px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
       <div className="mx-auto max-w-[1100px]">
-        <Reveal className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">
-              Полимерная камера ППП
-            </p>
-            <h2 className="mt-2 text-[clamp(26px,4.5vw,40px)] font-semibold leading-[1.1] tracking-tight text-[#101412]">
-              Влезет ли ваша деталь
-            </h2>
-          </div>
-          <p className="max-w-[340px] text-[14px] leading-[1.5] text-[#69736d]">
-            Изделия длиной до 12 м без разборки и резки. Камера 12×3×3 м, до 3,5 т.
+        <Reveal>
+          <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">Услуга</p>
+          <h2 className="mt-2 max-w-[640px] text-[clamp(26px,4.5vw,40px)] font-semibold leading-[1.12] tracking-tight text-[#101412]">
+            Не печь ради печи — покрытие, которое держит металл в работе
+          </h2>
+          <p className="mt-4 max-w-[520px] text-[15px] leading-[1.55] text-[#69736d]">
+            Для заводов МК, стройки и сварки: привезли — окрасили — забрали. Вы получаете готовую
+            поверхность под монтаж или отгрузку.
           </p>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {SPECS.map((s, i) => (
+        <div className="mt-10 grid gap-3 sm:grid-cols-2">
+          {BENEFITS.map((b, i) => (
             <Reveal
-              key={s.k}
-              delay={i * 80}
-              className="rounded-2xl border border-[#e0ddd6] bg-white p-4 shadow-[0_8px_30px_-16px_rgba(16,20,18,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_-16px_rgba(16,20,18,0.18)] sm:p-5"
+              key={b.t}
+              delay={i * 60}
+              className="rounded-2xl border border-[#e0ddd6] bg-white p-5 shadow-[0_8px_30px_-16px_rgba(16,20,18,0.1)] sm:p-6"
             >
-              <p className="text-[12px] uppercase tracking-wide text-[#8a948e]">{s.k}</p>
-              <p className="mt-1 text-[28px] font-semibold tracking-tight text-[#101412]">{s.v}</p>
-              <p className="mt-1 text-[12px] text-[#a0a9a3]">{s.sub}</p>
+              <p className="text-[16px] font-semibold text-[#101412]">{b.t}</p>
+              <p className="mt-2 text-[14px] leading-[1.5] text-[#69736d]">{b.d}</p>
             </Reveal>
           ))}
-        </div>
-
-        <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-          <Reveal className="relative min-h-[220px] overflow-hidden rounded-[24px] sm:min-h-[300px]">
-            <FadeImg src={A.factory} alt="" className="absolute inset-0 size-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#101412]/70 to-transparent" />
-            <div className="absolute bottom-5 left-5 right-5">
-              <p className="text-[13px] text-white/80">Производство · Новосибирск</p>
-              <p className="mt-1 max-w-[280px] text-[18px] font-medium leading-snug text-white">
-                Одна камера — изделия до 12&nbsp;м, до 3,5&nbsp;т
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0} className="flex flex-col justify-between rounded-[24px] border border-[#e0ddd6] bg-white p-6">
-            <div>
-              <p className="text-[13px] font-medium text-[#101412]">Что важно инженеру</p>
-              <ul className="mt-4 space-y-3 text-[14px] leading-[1.45] text-[#69736d]">
-                {[
-                  "Габарит и вес — сразу в заявке, проверим влезание",
-                  "Цвет RAL / образец — согласуем до запуска партии",
-                  "Срок от 2 дней при свободном слоте камеры",
-                ].map((line) => (
-                  <li key={line} className="flex gap-2">
-                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#ff5a36]" />
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="mt-6 rounded-xl bg-[#f4f2ec] p-4 text-[13px] leading-[1.5] text-[#69736d]">
-              <p className="font-medium text-[#101412]">Весь цикл — у нас</p>
-              <p className="mt-1">
-                Подготовка, полимеризация и контроль качества на одной площадке.
-                Отвечаем не за этап, а за готовую поверхность.
-              </p>
-            </div>
-          </Reveal>
         </div>
 
         <Reveal className="mt-14">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8a948e]">Типовые изделия</p>
-              <h3 className="mt-1 text-[22px] font-semibold text-[#101412] sm:text-[26px]">Что отдаёте в камеру</h3>
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#8a948e]">Изделия</p>
+              <h3 className="mt-1 text-[22px] font-semibold text-[#101412] sm:text-[26px]">Что отдаёте в работу</h3>
             </div>
-            <a href="#contact" className="hidden text-[13px] font-medium text-[#ff5a36] transition hover:underline sm:inline">
-              Спросить по вашему типу →
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className="hidden text-[13px] font-medium text-[#ff5a36] transition hover:underline sm:inline"
+            >
+              Свой тип изделия →
             </a>
           </div>
           <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
             {ITEMS.map((item, i) => (
               <Reveal
                 key={item.t}
-                delay={i * 80}
+                delay={i * 60}
                 className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#101412]"
               >
                 <FadeImg
@@ -124,7 +108,7 @@ export function Chamber() {
                   alt={item.t}
                   className="size-full object-cover transition duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <p className="absolute bottom-3 left-3 right-3 text-[13px] font-medium text-white sm:text-[14px]">
                   {item.t}
                 </p>
@@ -133,15 +117,53 @@ export function Chamber() {
           </div>
         </Reveal>
 
-        <Reveal delay={0} className="mt-10 flex flex-col gap-4 rounded-2xl border border-[#e0ddd6] bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <Reveal className="mt-14" as="div">
+          <div
+            id="kamera"
+            className="overflow-hidden rounded-[24px] border border-[#e0ddd6] bg-[#101412] text-[#faf9f5]"
+          >
+            <div className="grid gap-0 lg:grid-cols-[1fr_1.1fr]">
+              <div className="p-6 sm:p-8">
+                <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[#ff5a36]">
+                  Параметры камеры ППП
+                </p>
+                <p className="mt-2 text-[20px] font-semibold leading-snug sm:text-[22px]">
+                  Влезет ли ваша деталь — видно сразу
+                </p>
+                <p className="mt-3 text-[14px] leading-[1.5] text-[#9da7a1]">
+                  Рабочая зона 12×3×3&nbsp;м, до 3,5&nbsp;т. Если габарит на грани — напишите в заявке,
+                  проверим до приёмки.
+                </p>
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {SPECS.map((s) => (
+                    <div key={s.k} className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3">
+                      <p className="text-[10px] uppercase tracking-wide text-[#7a847e]">{s.k}</p>
+                      <p className="mt-1 text-[18px] font-semibold tracking-tight">{s.v}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="relative min-h-[200px] border-t border-white/10 lg:border-l lg:border-t-0">
+                <FadeImg src={A.capacity} alt="Камера ППП" className="absolute inset-0 size-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#101412]/80 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#101412]/40" />
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-8 flex flex-col gap-4 rounded-2xl border border-[#e0ddd6] bg-white p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div>
-            <p className="text-[15px] font-medium text-[#101412]">Как считается цена</p>
+            <p className="text-[15px] font-medium text-[#101412]">Нужен расчёт под ваше изделие</p>
             <p className="mt-1 max-w-[480px] text-[13px] leading-[1.5] text-[#69736d]">
-              Площадь, сложность подготовки, цвет и объём партии. Ориентир по рынку Новосибирска — в расчёте за рабочий день.
+              Площадь, подготовка, цвет и объём партии. Ответ в рабочий день.
             </p>
           </div>
           <a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
             className="btn-lift flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[#101412] px-6 text-[13px] text-white"
           >
             Запросить сумму <Arrow className="size-3.5" />
