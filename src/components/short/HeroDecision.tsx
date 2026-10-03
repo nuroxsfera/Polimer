@@ -35,12 +35,12 @@ export function HeroDecision() {
           <p className="hero-in hero-in-d1 text-[13px] font-medium uppercase tracking-[0.12em] text-[#ff5a36]">
             ПолимерКолор
           </p>
-          <h1 className="hero-in hero-in-d2 mt-2 text-[clamp(30px,6.5vw,56px)] font-semibold leading-[1.05] tracking-tight text-[#faf9f5]">
-            Порошковая окраска
-            <span className="block text-[#aeb7b1]">крупногабарита</span>
+          <h1 className="hero-in hero-in-d2 mt-2 text-[clamp(26px,5.2vw,44px)] font-semibold leading-[1.12] tracking-tight text-[#faf9f5]">
+            Полимерно-порошковое окрашивание металла
+            <span className="mt-1 block font-medium text-[#aeb7b1]">в&nbsp;Новосибирске</span>
           </h1>
           <p className="hero-in hero-in-d3 mt-4 max-w-[480px] text-[15px] leading-[1.55] text-[#9da7a1] sm:text-[17px]">
-            Длинномер до&nbsp;12&nbsp;м — целиком, без разборки и порезки. Полимерная камера ППО 10×3×3&nbsp;м, до&nbsp;1,5&nbsp;т. Срок от&nbsp;2&nbsp;дней.
+            Длинномер и крупногабарит целиком — без разборки и порезки. Камера ППО до&nbsp;12&nbsp;м, 3×3&nbsp;м, до&nbsp;1,5&nbsp;т. Срок от&nbsp;2&nbsp;дней.
           </p>
 
           <div className="hero-in hero-in-d4 mt-8 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
@@ -99,7 +99,7 @@ export function HeroDecision() {
             <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
               <p className="text-[11px] uppercase tracking-wider text-[#aeb7b1]">Камера ППО</p>
               <p className="mt-1 text-[20px] font-medium text-white">10 × 3 × 3 м</p>
-              <p className="mt-1 text-[13px] text-[#9da7a1]">Рабочая зона под длинномер и фермы</p>
+              <p className="mt-1 text-[13px] text-[#9da7a1]">Рабочая зона под длинномер</p>
             </div>
           </div>
         </div>
