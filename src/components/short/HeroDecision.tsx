@@ -21,8 +21,7 @@ function FadeImg({ src, alt, className }: { src: string; alt: string; className?
 export function HeroDecision() {
   return (
     <section className="relative overflow-hidden bg-[#101412]">
-      <div className="pointer-events-none absolute -right-20 top-20 h-[420px] w-[420px] rounded-full bg-[#ff5a36]/15 blur-[100px] animate-glow-breathe" />
-      <div className="pointer-events-none absolute -left-16 bottom-0 h-[280px] w-[280px] rounded-full bg-[#355cff]/10 blur-[80px] animate-glow-breathe" />
+      <div className="pointer-events-none absolute -right-16 top-24 h-[320px] w-[320px] rounded-full bg-[#ff5a36]/12 blur-[90px]" />
 
       <div className="relative mx-auto grid max-w-[1100px] gap-10 px-4 pb-12 pt-[5.5rem] sm:px-6 sm:pb-16 sm:pt-28 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-12 lg:px-10 lg:pb-20">
         <div>
@@ -66,12 +65,20 @@ export function HeroDecision() {
           <div className="hero-in hero-in-d5 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
               className="btn-lift flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#ff5a36] px-7 text-[15px] font-medium text-white shadow-[0_12px_40px_-10px_rgba(255,90,54,0.55)]"
             >
               Получить просчёт <Arrow className="size-4" />
             </a>
             <a
               href="#kamera"
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector("#kamera")?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
               className="btn-lift flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/20 px-6 text-[14px] text-[#e8ece9] hover:border-white/40 hover:bg-white/5"
             >
               Параметры камеры
@@ -94,10 +101,6 @@ export function HeroDecision() {
               <p className="mt-1 text-[20px] font-medium text-white">10 × 3 × 3 м</p>
               <p className="mt-1 text-[13px] text-[#9da7a1]">Рабочая зона под длинномер и фермы</p>
             </div>
-          </div>
-          <div className="absolute -left-3 top-6 hidden animate-soft-float rounded-2xl border border-white/10 bg-[#151a17]/95 px-4 py-3 shadow-xl backdrop-blur-md sm:block">
-            <p className="text-[10px] uppercase text-[#8a948e]">Формат</p>
-            <p className="text-[14px] font-medium text-[#faf9f5]">Без разборки</p>
           </div>
         </div>
       </div>
